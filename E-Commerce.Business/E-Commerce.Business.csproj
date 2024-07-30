@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>E_Commerce.Business</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Configratuions\" />
+    <None Remove="DTOs\" />
+    <None Remove="Errors\" />
+    <None Remove="Helpers\" />
+    <None Remove="Hubs\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Mappings\" />
+    <None Remove="Middelware\" />
+    <None Remove="Services\" />
+    <None Remove="Validators\" />
+    <None Remove="Validators\AccountValidator\" />
+    <None Remove="DTOs\AccountDto\" />
+    <None Remove="DTOs\ResponseDto\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configratuions\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Errors\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Hubs\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Middelware\" />
+    <Folder Include="Services\" />
+    <Folder Include="Validators\" />
+    <Folder Include="Validators\AccountValidator\" />
+    <Folder Include="DTOs\AccountDto\" />
+    <Folder Include="DTOs\ResponseDto\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E-Commerce.Data\E-Commerce.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.32">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.32">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.32" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.32" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+  </ItemGroup>
+</Project>
