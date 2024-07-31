@@ -21,6 +21,8 @@
     <None Remove="Validators\AccountValidator\" />
     <None Remove="DTOs\AccountDto\" />
     <None Remove="DTOs\ResponseDto\" />
+    <None Remove="Validators\CategoryValidator\" />
+    <None Remove="DTOs\CategoryDto\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configratuions\" />
@@ -36,12 +38,13 @@
     <Folder Include="Validators\AccountValidator\" />
     <Folder Include="DTOs\AccountDto\" />
     <Folder Include="DTOs\ResponseDto\" />
+    <Folder Include="Validators\CategoryValidator\" />
+    <Folder Include="DTOs\CategoryDto\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\E-Commerce.Data\E-Commerce.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.32" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.32">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -55,5 +58,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.32" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.32" />
     <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.32" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.32" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "Hash": "6O+Tmv0CCGJhEIWvvDJEKse3YaM9KBFvpFugEKiHbdA=",
+  "Source": "E-Commerce",
+  "BasePath": "_content/E-Commerce",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "E-Commerce/wwwroot",
+      "Source": "E-Commerce",
+      "ContentRoot": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/",
+      "BasePath": "_content/E-Commerce",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/.DS_Store",
+      "SourceId": "E-Commerce",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/",
+      "BasePath": "_content/E-Commerce",
+      "RelativePath": ".DS_Store",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/.DS_Store"
+    },
+    {
+      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/ResetPassword.html",
+      "SourceId": "E-Commerce",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/",
+      "BasePath": "_content/E-Commerce",
+      "RelativePath": "verification/ResetPassword.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/verification/ResetPassword.html"
+    },
+    {
+      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/VerificationEmail.html",
+      "SourceId": "E-Commerce",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/",
+      "BasePath": "_content/E-Commerce",
+      "RelativePath": "verification/VerificationEmail.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/verification/VerificationEmail.html"
+    }
+  ]
+}

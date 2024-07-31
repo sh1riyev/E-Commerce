@@ -1,0 +1,14 @@
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/bin/Debug/net6.0/E-Commerce.Core.deps.json
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/bin/Debug/net6.0/E-Commerce.Core.runtimeconfig.json
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/bin/Debug/net6.0/E-Commerce.Core.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/bin/Debug/net6.0/E-Commerce.Core.pdb
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.csproj.AssemblyReference.cache
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.AssemblyInfoInputs.cache
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.AssemblyInfo.cs
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.csproj.CoreCompileInputs.cache
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/refint/E-Commerce.Core.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.pdb
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.genruntimeconfig.cache
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/ref/E-Commerce.Core.dll

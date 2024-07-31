@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/.DS_Store",
+      "PackagePath": "staticwebassets/.DS_Store"
+    },
+    {
+      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/ResetPassword.html",
+      "PackagePath": "staticwebassets/verification/ResetPassword.html"
+    },
+    {
+      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/VerificationEmail.html",
+      "PackagePath": "staticwebassets/verification/VerificationEmail.html"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.E-Commerce.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.build.E-Commerce.props",
+      "PackagePath": "build\\E-Commerce.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.E-Commerce.props",
+      "PackagePath": "buildMultiTargeting\\E-Commerce.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.E-Commerce.props",
+      "PackagePath": "buildTransitive\\E-Commerce.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,4 +1,5 @@
 ﻿using System;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 
 namespace E_Commerce.Business.Interfaces
