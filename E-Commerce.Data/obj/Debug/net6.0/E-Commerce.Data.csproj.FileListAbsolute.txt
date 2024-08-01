@@ -9,9 +9,9 @@
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.AssemblyInfoInputs.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.AssemblyInfo.cs
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.csproj.CoreCompileInputs.cache
-/Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.csproj.CopyComplete
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.dll
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/refint/E-Commerce.Data.dll
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.pdb
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.genruntimeconfig.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/ref/E-Commerce.Data.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Data/obj/Debug/net6.0/E-Commerce.Data.csproj.CopyComplete
