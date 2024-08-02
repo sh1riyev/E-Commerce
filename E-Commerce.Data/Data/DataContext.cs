@@ -7,7 +7,9 @@ namespace E_Commerce.Data.Data
 {
 	public class DataContext : IdentityDbContext <AppUser>
 	{
-		public DataContext(DbContextOptions context) : base(context)
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+
+        public DataContext(DbContextOptions context) : base(context)
 		{
 		}
 
