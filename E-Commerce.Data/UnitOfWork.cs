@@ -1,5 +1,7 @@
 ﻿using System;
+using E_Commerce.Core.Repositories;
 using E_Commerce.Data.Data;
+using E_Commerce.Data.Implimentations;
 
 namespace E_Commerce.Data
 {
@@ -9,7 +11,11 @@ namespace E_Commerce.Data
 		public UnitOfWork(DataContext context)
 		{
             _context = context;
-		}
+            ChatMessageRepository = new ChatMessageRepository(_context);
+        }
+
+        public IChatMessageRepository ChatMessageRepository { get; private set; }
+
 
         public async Task<int> Complate()
         {

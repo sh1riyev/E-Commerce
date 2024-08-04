@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.Data.Data
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240802175154_Initial")]
+    [Migration("20240804144834_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,14 +31,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("CityId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 800, DateTimeKind.Utc).AddTicks(5170));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -48,15 +52,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("LocationName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -67,7 +74,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -76,6 +84,14 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("UserId");
 
                     b.ToTable("Address");
+
+                    b.HasCheckConstraint("CK_Address_LocationName_MinLength", "LEN(LocationName) >= 3");
+
+                    b.HasCheckConstraint("CK_Address_State_MinLength", "LEN(State) >= 3");
+
+                    b.HasCheckConstraint("CK_Address_Street_MinLength", "LEN(Street) >= 3");
+
+                    b.HasCheckConstraint("CK_Address_ZipCode_MinLength", "LEN(ZipCode) >= 3");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.AppUser", b =>
@@ -102,7 +118,7 @@ namespace E_Commerce.Data.Data
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 2, 21, 51, 54, 109, DateTimeKind.Utc).AddTicks(9590));
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 18, 48, 33, 800, DateTimeKind.Utc).AddTicks(6290));
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -191,8 +207,8 @@ namespace E_Commerce.Data.Data
                             Id = "56e9e4e5-22a8-45a7-ab6c-999180f9d2e2",
                             AccessFailedCount = 0,
                             AddedBy = "System",
-                            ConcurrencyStamp = "59589288-58b9-4217-b9d6-cd5b9fd7c076",
-                            CreatedAt = new DateTime(2024, 8, 2, 21, 51, 54, 110, DateTimeKind.Local).AddTicks(320),
+                            ConcurrencyStamp = "27c9652c-da81-4b2a-b6cc-094d31f9a42a",
+                            CreatedAt = new DateTime(2024, 8, 4, 18, 48, 33, 800, DateTimeKind.Local).AddTicks(7130),
                             Email = "isiriyev@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Ilgar Shiriyev",
@@ -202,10 +218,10 @@ namespace E_Commerce.Data.Data
                             LockoutEnabled = false,
                             NormalizedEmail = "ISIRIYEV@GMAIL.COM",
                             NormalizedUserName = "SHIRIYEV",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMrU14u6XzT8/rwpFiw071DCukLBEZldjIibaFJWW5V+JT5Oic754uRsSDexzQjtHQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBFTyPgc7Rw+hmveE+AJiyCv+ScML+BdSqBC/9uhF3AVzLUdJ4RkvHA0eZ3RR/w6dA==",
                             PhoneNumber = "+994508802323",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "723d455b-d4f3-4926-9c5c-ab55e66b1907",
+                            SecurityStamp = "6fda35b6-ba8f-4cfa-8729-38d50452ae8d",
                             TwoFactorEnabled = false,
                             UserName = "Shiriyev",
                             isOnline = false
@@ -215,8 +231,8 @@ namespace E_Commerce.Data.Data
                             Id = "81c5f0b8-be89-4e4a-88ba-01ca7f6244dd",
                             AccessFailedCount = 0,
                             AddedBy = "System",
-                            ConcurrencyStamp = "4ccbc65b-5f57-4313-b933-72af03af4a43",
-                            CreatedAt = new DateTime(2024, 8, 2, 21, 51, 54, 110, DateTimeKind.Local).AddTicks(390),
+                            ConcurrencyStamp = "d2ab0625-143c-4b3a-9e71-9c192db1e7d4",
+                            CreatedAt = new DateTime(2024, 8, 4, 18, 48, 33, 800, DateTimeKind.Local).AddTicks(7960),
                             Email = "siriyev@hotmail.com",
                             EmailConfirmed = true,
                             FullName = "Rufat Code",
@@ -226,10 +242,10 @@ namespace E_Commerce.Data.Data
                             LockoutEnabled = false,
                             NormalizedEmail = "SIRIYEV@HOTMAIL.COM",
                             NormalizedUserName = "ILGAR023",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEs2Gw8pc6pi8XN4kSvvM8EQBa93s6beiQHCLvczuBD5IWOZYgrnEWNscPK9R4WvjQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEQt/w/VFwEaoxvXnGANZDcTxFV+C0G2dfuem8ShWeFK0cXSB6UqrtbAgb1gNX8xFw==",
                             PhoneNumber = "+994508802323",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d1d1712c-ba05-405b-9492-0d7b49cd531d",
+                            SecurityStamp = "ea92ba40-8b1a-44be-8d0d-11f930dc4d37",
                             TwoFactorEnabled = false,
                             UserName = "Ilgar23",
                             isOnline = false
@@ -243,13 +259,17 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(1550));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -275,6 +295,8 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("UserId");
 
                     b.ToTable("Basket");
+
+                    b.HasCheckConstraint("CK_Basket_Count_MinLength", "[Count] >= 0");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.Blog", b =>
@@ -284,14 +306,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(4630));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -334,6 +360,16 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("UserId");
 
                     b.ToTable("Blog");
+
+                    b.HasCheckConstraint("CK_Blog_Content_MinLength", "LEN(Content) >= 5");
+
+                    b.HasCheckConstraint("CK_Blog_Description_MinLength", "LEN(Description) >= 20");
+
+                    b.HasCheckConstraint("CK_Blog_Information_MinLength", "LEN(Information) >= 5");
+
+                    b.HasCheckConstraint("CK_Blog_Title_MinLength", "LEN(Title) >= 3");
+
+                    b.HasCheckConstraint("CK_Blog_ViewCount", "[ViewCount] >= 0");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.BlogComment", b =>
@@ -343,7 +379,9 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("BlogId")
                         .IsRequired()
@@ -354,7 +392,9 @@ namespace E_Commerce.Data.Data
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(3610));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -390,14 +430,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("BlogId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(5450));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -428,10 +472,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(6320));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -445,7 +493,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PublicId")
                         .IsRequired()
@@ -457,6 +506,74 @@ namespace E_Commerce.Data.Data
                     b.HasKey("Id");
 
                     b.ToTable("Brand");
+
+                    b.HasCheckConstraint("CK_Brand_Name_MinLength", "LEN(Name) >= 3");
+                });
+
+            modelBuilder.Entity("E_Commerce.Core.Entities.Campaign", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 900, DateTimeKind.Utc).AddTicks(8300));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Headling")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Info")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Sale")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Campaign");
+
+                    b.HasCheckConstraint("CK_Configure_Content_MinLength", "LEN(Content) >= 10");
+
+                    b.HasCheckConstraint("CK_Configure_Headling_MinLength", "LEN(Headling) >= 3 AND LEN(Headling)  <= 100");
+
+                    b.HasCheckConstraint("CK_Configure_Info_MinLength", "LEN(Info) >= 3 AND LEN(Info)  <= 100");
+
+                    b.HasCheckConstraint("CK_Configure_Sale", "[Sale] >= 0 AND [Sale]  <= 100");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.Category", b =>
@@ -466,10 +583,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(7230));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -486,7 +607,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ParentId")
                         .HasColumnType("nvarchar(450)");
@@ -503,6 +625,8 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("ParentId");
 
                     b.ToTable("Category");
+
+                    b.HasCheckConstraint("CK_Category_Name_MinLength", "LEN(Name) >= 3");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.ChatMessage", b =>
@@ -519,7 +643,7 @@ namespace E_Commerce.Data.Data
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 8, 3, 1, 51, 54, 204, DateTimeKind.Utc).AddTicks(4300));
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(5190));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -569,14 +693,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("AdressId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(7070));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -588,13 +716,17 @@ namespace E_Commerce.Data.Data
                         .HasColumnType("bit");
 
                     b.Property<string>("Promocode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<double>("Sale")
                         .HasColumnType("float");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<double>("TotalAmmount")
                         .HasColumnType("float");
@@ -613,6 +745,12 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("UserId");
 
                     b.ToTable("Check");
+
+                    b.HasCheckConstraint("CK_Check_Sale_MinLength", "[Sale] >= 0  AND [Sale]  <= 100");
+
+                    b.HasCheckConstraint("CK_Check_Status_MinLength", "[Status] >= 0");
+
+                    b.HasCheckConstraint("CK_Check_TotalAmmount_MinLength", "[TotalAmmount] >= 0");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.CheckProduct", b =>
@@ -622,14 +760,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("CheckId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(8750));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -657,6 +799,10 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("ProductId");
 
                     b.ToTable("CheckProduct");
+
+                    b.HasCheckConstraint("CK_CheckProduct_Price_MinLength", "[Price] >= 0");
+
+                    b.HasCheckConstraint("CK_CheckProduct_ProductCount_MinLength", "[ProductCount] >= 0");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.City", b =>
@@ -666,14 +812,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("CountryId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(9680));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -686,7 +836,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -696,6 +847,74 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("CountryId");
 
                     b.ToTable("City");
+
+                    b.HasCheckConstraint("CK_City_DeliverPrice_MinLength", "[DeliverPrice] >= 0");
+
+                    b.HasCheckConstraint("CK_City_Name_MinLength", "LEN(Name) >= 3");
+                });
+
+            modelBuilder.Entity("E_Commerce.Core.Entities.Contact", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(4990));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsResponded")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("RespondedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contact");
+
+                    b.HasCheckConstraint("CK_Contact_Email_MinLength", "LEN(Email) >= 3");
+
+                    b.HasCheckConstraint("CK_Contact_Message_MinLength", "LEN(Message) >= 5");
+
+                    b.HasCheckConstraint("CK_Contact_Name_MinLength", "LEN(Name) >= 3");
+
+                    b.HasCheckConstraint("CK_Contact_Subject_MinLength", "LEN(Subject) >= 3");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.Country", b =>
@@ -705,10 +924,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(5780));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -718,7 +941,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -726,6 +950,8 @@ namespace E_Commerce.Data.Data
                     b.HasKey("Id");
 
                     b.ToTable("Country");
+
+                    b.HasCheckConstraint("CK_Country_Name_MinLength", "LEN(Name) >= 3");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.Product", b =>
@@ -738,7 +964,9 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("BrandId")
                         .IsRequired()
@@ -757,10 +985,14 @@ namespace E_Commerce.Data.Data
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Count")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(9560));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -783,7 +1015,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -793,7 +1026,9 @@ namespace E_Commerce.Data.Data
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ReviewCount")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<double>("SalePercentage")
                         .HasColumnType("float");
@@ -804,10 +1039,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Size")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Standart");
 
                     b.Property<int>("StarsCount")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(5);
 
                     b.Property<double>("Tax")
                         .HasColumnType("float");
@@ -833,6 +1072,32 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("SellerId");
 
                     b.ToTable("Product");
+
+                    b.HasCheckConstraint("CK_Product_Color_MinLength", "LEN(Color) >= 3");
+
+                    b.HasCheckConstraint("CK_Product_Content_MinLength", "LEN(Content) >= 10");
+
+                    b.HasCheckConstraint("CK_Product_Count_MinLength", "[Count] >= 0");
+
+                    b.HasCheckConstraint("CK_Product_Material_MinLength", "LEN(Material) >= 3");
+
+                    b.HasCheckConstraint("CK_Product_Name_MinLength", "LEN(Name) >= 3");
+
+                    b.HasCheckConstraint("CK_Product_Price_MinLength", "[Price] >= 0");
+
+                    b.HasCheckConstraint("CK_Product_ProductCode_MinLength", "LEN(ProductCode) >= 5");
+
+                    b.HasCheckConstraint("CK_Product_SalePercentage", "[SalePercentage] >= 0 AND [SalePercentage] <= 100");
+
+                    b.HasCheckConstraint("CK_Product_Size_MinLength", "LEN(Size) >= 1 AND LEN(Size)<40");
+
+                    b.HasCheckConstraint("CK_Product_StarsCount", "[StarsCount] >= 0 AND [StarsCount] <= 5");
+
+                    b.HasCheckConstraint("CK_Product_Tax_MinLength", "[Tax] >= 0");
+
+                    b.HasCheckConstraint("CK_Product_VipDegre_MinLength", "[VipDegre] >= 0");
+
+                    b.HasCheckConstraint("CK_Product_Weight_MinLength", "[Weight] >= 0");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.ProductComment", b =>
@@ -842,14 +1107,18 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(8030));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -878,6 +1147,8 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("UserId");
 
                     b.ToTable("ProductComment");
+
+                    b.HasCheckConstraint("CK_ProductComment_Rating_MinLength", "[Rating] >= 0 AND [Rating] <=5");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.ProductImage", b =>
@@ -887,10 +1158,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 902, DateTimeKind.Utc).AddTicks(310));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -927,10 +1202,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 904, DateTimeKind.Utc).AddTicks(10));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -958,6 +1237,246 @@ namespace E_Commerce.Data.Data
                     b.ToTable("ProductTag");
                 });
 
+            modelBuilder.Entity("E_Commerce.Core.Entities.Setting", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 902, DateTimeKind.Utc).AddTicks(5180));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Setting");
+
+                    b.HasCheckConstraint("CK_Setting_Value_MinLength", "LEN(Value) >= 3");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "154611ce-4101-4fd1-a7e6-32e76cdcdcf9",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Free Shipping",
+                            Value = "Free shipping on all US order or order above $100"
+                        },
+                        new
+                        {
+                            Id = "69d9f6c9-d060-4196-9a33-fbd2acf167b2",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Shop with Confidence",
+                            Value = "Our Protection covers your purchase from click to delivery"
+                        },
+                        new
+                        {
+                            Id = "ca1cebbd-34db-4db4-b42f-eaa3176db520",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "24/7 Help Center",
+                            Value = "Round-the-clock assistance for a smooth shopping experience"
+                        },
+                        new
+                        {
+                            Id = "8e0d1a2b-8d7e-44e0-a00e-cda94f71b7f5",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Location",
+                            Value = "Neftchi Gurban 168, Baku 1001"
+                        },
+                        new
+                        {
+                            Id = "eca4368e-d100-49a1-ac28-cb928fc8510e",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Phone",
+                            Value = "(+0) 900 901 904"
+                        },
+                        new
+                        {
+                            Id = "fbb80157-f887-4419-af60-cccf9fa4d097",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Email",
+                            Value = "isiriyev@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "ea99906b-fdbe-484f-bab6-1cb6534068ec",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Facebook",
+                            Value = "www.facebook.com"
+                        },
+                        new
+                        {
+                            Id = "88ccdfd9-3498-4cef-82a6-00f226971782",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "LinkedIn",
+                            Value = "linkedin.com"
+                        },
+                        new
+                        {
+                            Id = "acf56bf4-21e3-438e-9fd9-e24829907e34",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Instagram",
+                            Value = "www.instagram.com"
+                        },
+                        new
+                        {
+                            Id = "349664c0-689a-42da-8929-a7e05e17ffbe",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Google",
+                            Value = "www.google.com"
+                        },
+                        new
+                        {
+                            Id = "3ed3de28-8be8-4e7b-a349-598521e75fa7",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Key = "Youtube",
+                            Value = "www.youtube.com"
+                        });
+                });
+
+            modelBuilder.Entity("E_Commerce.Core.Entities.Slider", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(1670));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Information")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Slider");
+
+                    b.HasCheckConstraint("CK_Slider_Content_MinLength", "LEN(Content) >= 10");
+
+                    b.HasCheckConstraint("CK_Slider_Description_MinLength", "LEN(Description) >= 10");
+
+                    b.HasCheckConstraint("CK_Slider_Information_MinLength", "LEN(Information) >= 3");
+
+                    b.HasCheckConstraint("CK_Slider_Title_MinLength", "LEN(Title) >= 3");
+                });
+
+            modelBuilder.Entity("E_Commerce.Core.Entities.Subscribe", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(6650));
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscribe");
+
+                    b.HasCheckConstraint("CK_Subscribe_Email_MinLength", "LEN(Email) >= 3");
+
+                    b.HasCheckConstraint("CK_Subscribe_Gender_MinLength", "LEN(Gender) >= 3");
+                });
+
             modelBuilder.Entity("E_Commerce.Core.Entities.Tag", b =>
                 {
                     b.Property<string>("Id")
@@ -965,10 +1484,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(7440));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -978,7 +1501,8 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -986,6 +1510,8 @@ namespace E_Commerce.Data.Data
                     b.HasKey("Id");
 
                     b.ToTable("Tag");
+
+                    b.HasCheckConstraint("CK_Tag_Name_MinLength", "LEN(Name) >= 3");
                 });
 
             modelBuilder.Entity("E_Commerce.Core.Entities.Wishlist", b =>
@@ -995,10 +1521,14 @@ namespace E_Commerce.Data.Data
 
                     b.Property<string>("AddedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("System");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(9190));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -1051,6 +1581,32 @@ namespace E_Commerce.Data.Data
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "20cc338d-4993-4a04-87b5-0f8fc208ceba",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "fee579ed-a458-41ad-b9f4-4299f5a50029",
+                            Name = "SupperAdmin",
+                            NormalizedName = "SUPPERADMIN"
+                        },
+                        new
+                        {
+                            Id = "03ae8e72-74d1-4479-b8a3-d628cebf7309",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "e535ff1b-18f2-4ea5-98e0-467b088d5a27",
+                            Name = "Seller",
+                            NormalizedName = "SELLER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1138,6 +1694,18 @@ namespace E_Commerce.Data.Data
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "56e9e4e5-22a8-45a7-ab6c-999180f9d2e2",
+                            RoleId = "20cc338d-4993-4a04-87b5-0f8fc208ceba"
+                        },
+                        new
+                        {
+                            UserId = "81c5f0b8-be89-4e4a-88ba-01ca7f6244dd",
+                            RoleId = "fee579ed-a458-41ad-b9f4-4299f5a50029"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -1183,13 +1751,13 @@ namespace E_Commerce.Data.Data
                     b.HasOne("E_Commerce.Core.Entities.Product", "Product")
                         .WithMany("Baskets")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("E_Commerce.Core.Entities.AppUser", "AppUser")
                         .WithMany("Baskets")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -1213,7 +1781,7 @@ namespace E_Commerce.Data.Data
                     b.HasOne("E_Commerce.Core.Entities.Blog", "Blog")
                         .WithMany("BlogComments")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("E_Commerce.Core.Entities.BlogComment", "Parent")
@@ -1291,7 +1859,7 @@ namespace E_Commerce.Data.Data
                     b.HasOne("E_Commerce.Core.Entities.AppUser", "AppUser")
                         .WithMany("Checkes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Adress");
@@ -1304,13 +1872,13 @@ namespace E_Commerce.Data.Data
                     b.HasOne("E_Commerce.Core.Entities.Check", "Check")
                         .WithMany("CheckProducts")
                         .HasForeignKey("CheckId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("E_Commerce.Core.Entities.Product", "Product")
                         .WithMany("CheckProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Check");
@@ -1361,7 +1929,7 @@ namespace E_Commerce.Data.Data
                     b.HasOne("E_Commerce.Core.Entities.Product", "Product")
                         .WithMany("ProductComments")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("E_Commerce.Core.Entities.AppUser", "AppUser")
@@ -1410,13 +1978,13 @@ namespace E_Commerce.Data.Data
                     b.HasOne("E_Commerce.Core.Entities.Product", "Product")
                         .WithMany("Wishlists")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("E_Commerce.Core.Entities.AppUser", "AppUser")
                         .WithMany("Wishlists")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AppUser");
