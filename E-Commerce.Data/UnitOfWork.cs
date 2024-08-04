@@ -11,11 +11,15 @@ namespace E_Commerce.Data
 		public UnitOfWork(DataContext context)
 		{
             _context = context;
+            CategoryRepository = new CategoryRepository(_context);
             ChatMessageRepository = new ChatMessageRepository(_context);
+            CheckRepository = new CheckRepository(_context);
+
         }
 
+        public ICategoryRepository CategoryRepository { get; private set; }
         public IChatMessageRepository ChatMessageRepository { get; private set; }
-
+        public ICheckRepository CheckRepository { get; private set; }
 
         public async Task<int> Complate()
         {
