@@ -1,7 +1,9 @@
 ﻿using System;
 using E_Commerce.Core.Repositories;
 using E_Commerce.Data.Data;
+using E_Commerce.Data.Implementations;
 using E_Commerce.Data.Implimentations;
+using Web_Api.Core.Repositories;
 
 namespace E_Commerce.Data
 {
@@ -14,12 +16,24 @@ namespace E_Commerce.Data
             CategoryRepository = new CategoryRepository(_context);
             ChatMessageRepository = new ChatMessageRepository(_context);
             CheckRepository = new CheckRepository(_context);
-
+            ProductRepository = new ProductRepository(_context);
+            ContactRepository = new ContactRepository(_context);
+            ProductTagRepository = new ProductTagRepository(_context);
+            ProductImageRepository = new ProductImageRepository(_context);
+            BrandRepository = new BrandRepository(_context);
+            TagRepository = new TagRepository(_context);
         }
 
         public ICategoryRepository CategoryRepository { get; private set; }
         public IChatMessageRepository ChatMessageRepository { get; private set; }
         public ICheckRepository CheckRepository { get; private set; }
+        public IProductRepository ProductRepository { get; private set; }
+        public IContactRepository ContactRepository { get; private set; }
+        public IProductTagRepository ProductTagRepository { get; private set; }
+        public IProductImageRepository ProductImageRepository { get; private set; }
+        public IBrandRepository BrandRepository { get; private set; }
+        public ITagRepository TagRepository { get; private set; }
+
 
         public async Task<int> Complate()
         {
