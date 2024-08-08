@@ -1,6 +1,5 @@
 ﻿using System;
 using E_Commerce.Core.Repositories;
-using Web_Api.Core.Repositories;
 
 namespace E_Commerce.Data
 {
@@ -13,6 +12,9 @@ namespace E_Commerce.Data
         IContactRepository ContactRepository { get; }
         IProductTagRepository ProductTagRepository { get; }
         IProductImageRepository ProductImageRepository { get; }
+        IProductCommentRepository ProductCommentRepository { get; }
+        IWishlistRepository WishlistRepository { get; }
+        IBasketRepository BasketRepository { get; }
         IBrandRepository BrandRepository { get; }
         ITagRepository TagRepository { get; }
 

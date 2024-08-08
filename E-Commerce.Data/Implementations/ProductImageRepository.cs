@@ -1,8 +1,9 @@
 ﻿using System;
-using Web_Api.Core.Entities;
-using Web_Api.Core.Repositories;
+using E_Commerce.Core.Entities;
+using E_Commerce.Core.Repositories;
+using E_Commerce.Data.Data;
 
-namespace Web_Api.Data.Implimentations
+namespace E_Commerce.Data.Implimentations
 {
 	public class ProductImageRepository:Repository<ProductImage>,IProductImageRepository
 	{

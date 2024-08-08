@@ -5,9 +5,9 @@ using E_Commerce.Data.Data;
 
 namespace E_Commerce.Data.Implimentations
 {
-	public class ProductTagRepository:Repository<ProductTag>,IProductTagRepository
-	{
-		public ProductTagRepository(DataContext context) : base(context)
+	public class WishlistRepository:Repository<Wishlist>, IWishlistRepository
+    {
+		public WishlistRepository(DataContext context) : base(context)
         {
 		}
 	}

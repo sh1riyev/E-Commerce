@@ -12,8 +12,13 @@ namespace E_Commerce.Data.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<ProductComment> ProductComments { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+
         public DataContext(DbContextOptions context) : base(context)
 		{
 		}

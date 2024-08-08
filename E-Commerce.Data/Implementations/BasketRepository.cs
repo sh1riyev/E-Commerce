@@ -5,9 +5,9 @@ using E_Commerce.Data.Data;
 
 namespace E_Commerce.Data.Implimentations
 {
-	public class ProductTagRepository:Repository<ProductTag>,IProductTagRepository
+	public class BasketRepository:Repository<Basket>,IBasketRepository
 	{
-		public ProductTagRepository(DataContext context) : base(context)
+		public BasketRepository(DataContext context) : base(context)
         {
 		}
 	}

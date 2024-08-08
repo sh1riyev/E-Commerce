@@ -3,7 +3,6 @@ using E_Commerce.Core.Repositories;
 using E_Commerce.Data.Data;
 using E_Commerce.Data.Implementations;
 using E_Commerce.Data.Implimentations;
-using Web_Api.Core.Repositories;
 
 namespace E_Commerce.Data
 {
@@ -22,6 +21,9 @@ namespace E_Commerce.Data
             ProductImageRepository = new ProductImageRepository(_context);
             BrandRepository = new BrandRepository(_context);
             TagRepository = new TagRepository(_context);
+            ProductCommentRepository = new ProductCommentRepository(_context);
+            WishlistRepository = new WishlistRepository(_context);
+            BasketRepository = new BasketRepository(_context);
         }
 
         public ICategoryRepository CategoryRepository { get; private set; }
@@ -33,7 +35,9 @@ namespace E_Commerce.Data
         public IProductImageRepository ProductImageRepository { get; private set; }
         public IBrandRepository BrandRepository { get; private set; }
         public ITagRepository TagRepository { get; private set; }
-
+        public IProductCommentRepository ProductCommentRepository { get; private set; }
+        public IWishlistRepository WishlistRepository { get; private set; }
+        public IBasketRepository BasketRepository { get; private set; }
 
         public async Task<int> Complate()
         {
