@@ -19,6 +19,7 @@ namespace E_Commerce.Data.Data
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         public DataContext(DbContextOptions context) : base(context)
 		{

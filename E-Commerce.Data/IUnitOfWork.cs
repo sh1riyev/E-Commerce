@@ -7,6 +7,7 @@ namespace E_Commerce.Data
 	{
         IChatMessageRepository ChatMessageRepository { get; }
         ICheckRepository CheckRepository { get; }
+        ICheckProductRepository CheckProductRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
         IContactRepository ContactRepository { get; }
@@ -18,6 +19,7 @@ namespace E_Commerce.Data
         IBrandRepository BrandRepository { get; }
         ITagRepository TagRepository { get; }
         IAddressRepository AddressRepository { get; }
+        ICountryRepository CountryRepository { get; }
 
         Task<int> Complate();
     }
