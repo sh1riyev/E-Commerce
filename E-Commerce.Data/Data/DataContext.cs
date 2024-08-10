@@ -18,6 +18,7 @@ namespace E_Commerce.Data.Data
         public DbSet<ProductComment> ProductComments { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public DataContext(DbContextOptions context) : base(context)
 		{

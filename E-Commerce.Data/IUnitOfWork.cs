@@ -17,6 +17,7 @@ namespace E_Commerce.Data
         IBasketRepository BasketRepository { get; }
         IBrandRepository BrandRepository { get; }
         ITagRepository TagRepository { get; }
+        IAddressRepository AddressRepository { get; }
 
         Task<int> Complate();
     }

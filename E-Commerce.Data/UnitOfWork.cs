@@ -24,6 +24,7 @@ namespace E_Commerce.Data
             ProductCommentRepository = new ProductCommentRepository(_context);
             WishlistRepository = new WishlistRepository(_context);
             BasketRepository = new BasketRepository(_context);
+            AddressRepository = new AddressRepository(_context);
         }
 
         public ICategoryRepository CategoryRepository { get; private set; }
@@ -38,6 +39,7 @@ namespace E_Commerce.Data
         public IProductCommentRepository ProductCommentRepository { get; private set; }
         public IWishlistRepository WishlistRepository { get; private set; }
         public IBasketRepository BasketRepository { get; private set; }
+        public IAddressRepository AddressRepository { get; private set; }
 
         public async Task<int> Complate()
         {
