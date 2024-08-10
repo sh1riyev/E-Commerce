@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web_Api.Business.DTO.AccountDto
+namespace E_Commerce.Business.DTOs.AccountDto
 {
 	public class UserResetPasswordDto
 	{

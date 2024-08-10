@@ -18,11 +18,23 @@
     <None Remove="Middelware\" />
     <None Remove="Services\" />
     <None Remove="Validators\" />
-    <None Remove="Validators\AccountValidator\" />
     <None Remove="DTOs\AccountDto\" />
     <None Remove="DTOs\ResponseDto\" />
     <None Remove="Validators\CategoryValidator\" />
     <None Remove="DTOs\CategoryDto\" />
+    <None Remove="DTOs\ChatMessageDto\" />
+    <None Remove="DTOs\AddressDto\" />
+    <None Remove="DTOs\BrandDto\" />
+    <None Remove="DTOs\FilterDto\" />
+    <None Remove="DTOs\UserDto\" />
+    <None Remove="DTOs\ProductDto\" />
+    <None Remove="DTOs\WishlistDto\" />
+    <None Remove="DTOs\BasketDto\" />
+    <None Remove="DTOs\CheckDto\" />
+    <None Remove="DTOs\BlogDto\" />
+    <None Remove="Validators\UserValidator\" />
+    <None Remove="Validators\ChatMessageValidator\" />
+    <None Remove="Validators\ProductValidator\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configratuions\" />
@@ -35,11 +47,23 @@
     <Folder Include="Middelware\" />
     <Folder Include="Services\" />
     <Folder Include="Validators\" />
-    <Folder Include="Validators\AccountValidator\" />
     <Folder Include="DTOs\AccountDto\" />
     <Folder Include="DTOs\ResponseDto\" />
     <Folder Include="Validators\CategoryValidator\" />
     <Folder Include="DTOs\CategoryDto\" />
+    <Folder Include="DTOs\ChatMessageDto\" />
+    <Folder Include="DTOs\AddressDto\" />
+    <Folder Include="DTOs\BrandDto\" />
+    <Folder Include="DTOs\FilterDto\" />
+    <Folder Include="DTOs\UserDto\" />
+    <Folder Include="DTOs\ProductDto\" />
+    <Folder Include="DTOs\WishlistDto\" />
+    <Folder Include="DTOs\BasketDto\" />
+    <Folder Include="DTOs\CheckDto\" />
+    <Folder Include="DTOs\BlogDto\" />
+    <Folder Include="Validators\UserValidator\" />
+    <Folder Include="Validators\ChatMessageValidator\" />
+    <Folder Include="Validators\ProductValidator\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\E-Commerce.Data\E-Commerce.Data.csproj" />
@@ -64,5 +88,6 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.32" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.32" />
   </ItemGroup>
 </Project>

@@ -1,9 +1,11 @@
 ﻿using System;
 namespace E_Commerce.Core.Entities
 {
-	public class Setting
+	public class Setting : BaseEntity
 	{
-		public Setting()
+        public string Key { get; set; }
+        public string Value { get; set; }
+        public Setting()
 		{
 		}
 	}

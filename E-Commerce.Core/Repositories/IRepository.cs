@@ -5,7 +5,7 @@ namespace E_Commerce.Core.Repositories
 {
 	public interface IRepository<T>
 	{
-		Task<T> GetEntiy(Expression<Func<T, bool>> predicate = null, params string[] includes);
+		Task<T> GetEntity(Expression<Func<T, bool>> predicate = null, params string[] includes);
         Task<List<T>> GetAll(Expression<Func<T, bool>> predicate = null, params string[] includes);
         Task Create(T entity);
         Task Delete(T entity);

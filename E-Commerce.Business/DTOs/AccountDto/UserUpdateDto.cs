@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Web_Api.Business.DTO.AccountDto
+namespace E_Commerce.Business.DTOs.AccountDto
 {
 	public class UserUpdateDto
 	{

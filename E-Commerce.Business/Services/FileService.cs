@@ -1,33 +1,75 @@
 ﻿using System;
-using E_Commerce.Business.Interfaces;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using E_Commerce.Business.Interfaces;
 
 namespace E_Commerce.Business.Services
 {
-	public class FileService : IFileService
+	public class FileService:IFileService
 	{
-		public FileService()
+		private readonly IWebHostEnvironment _webHostEnviorment;
+		public FileService(IWebHostEnvironment webHostEnvironment)
 		{
+			_webHostEnviorment = webHostEnvironment;
 		}
 
         public string CreateImage(IFormFile file)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string fileName = Guid.NewGuid().ToString() + ".jpeg";
+                string path = Path.Combine(_webHostEnviorment.WebRootPath, "images", fileName);
+                using (FileStream stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                return fileName;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public void DeleteImage(string fileName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (System.IO.File.Exists(Path.Combine(_webHostEnviorment.WebRootPath, "images", fileName))) 
+                {
+                    System.IO.File.Delete(Path.Combine(_webHostEnviorment.WebRootPath,"images",fileName));
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public bool IsImage(IFormFile file)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return file.ContentType.Contains("image") ? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public bool IsLengthSuit(IFormFile file, int value)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return file.Length/1024 < value? true : false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

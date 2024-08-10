@@ -2,7 +2,7 @@
 using E_Commerce.Core.Entities;
 using System.Linq.Expressions;
 using E_Commerce.Business.DTOs.ResponseDto;
-using Web_Api.Business.DTO.AccountDto;
+using E_Commerce.Business.DTOs.AccountDto;
 
 namespace E_Commerce.Business.Interfaces
 {

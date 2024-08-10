@@ -1,11 +1,12 @@
 ﻿using System;
 namespace E_Commerce.Core.Entities
 {
-	public class Country
+	public class Country : BaseEntity
 	{
-		public Country()
-		{
-		}
-	}
+        public string Name { get; set; }
+        public Country()
+        {
+        }
+    }
 }
 

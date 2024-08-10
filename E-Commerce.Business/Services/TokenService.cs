@@ -8,7 +8,7 @@ using System.Collections;
 using E_Commerce.Business.Interfaces;
 using E_Commerce.Core.Entities;
 
-namespace Web_Api.Business.Services
+namespace E_Commerce.Business.Services
 {
     public class TokenService : ITokenService
     {

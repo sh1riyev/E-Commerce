@@ -1,11 +1,10 @@
 ﻿using System;
 using FluentValidation;
-using E_Commerce.Business.DTOs;
-using E_Commerce.Business.DTOs.CategoryDto;
+using E_Commerce.DTOs.CategoryDto;
 
-namespace Web_Api.Validators.CategoryValidator
+namespace E_Commerce.Validators.CategoryValidator
 {
-    public class CreateCategoryValidator : AbstractValidator<CategoryCreateDto>
+    public class CreateCategoryValidator : AbstractValidator<CreateCategoryDto>
     {
         public CreateCategoryValidator()
         {

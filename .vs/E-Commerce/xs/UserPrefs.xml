@@ -1,21 +1,35 @@
 ﻿<Properties StartupConfiguration="{1666D535-F398-47FA-A717-9E437CEA215B}|Default">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce.Business/Services/BasketService.cs">
+    <Files>
+      <File FileName="E-Commerce.Business/Services/AdressService.cs" Line="10" Column="1" />
+      <File FileName="E-Commerce.Business/Services/SendEmail.cs" Line="1" Column="1" />
+      <File FileName="E-Commerce.Business/Services/BasketService.cs" Line="1" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="E-Commerce" expanded="True">
-            <Node name="E-Commerce" expanded="True" selected="True" />
+            <Node name="E-Commerce">
+              <Node name="Controllers" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+            <Node name="E-Commerce.Business">
+              <Node name="Services" expanded="True">
+                <Node name="BasketService.cs" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints />
-  <MonoDevelop.Ide.ItemProperties.E-Commerce.Core FirstBuild="True" />
-  <MonoDevelop.Ide.ItemProperties.E-Commerce.Data FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/sh1riyev/Development/E-Commerce/E-Commerce/Program.cs" relfile="E-Commerce/Program.cs" line="10" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.E-Commerce FirstBuild="True" PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.ItemProperties.E-Commerce PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.E-Commerce.Business FirstBuild="True" />
 </Properties>

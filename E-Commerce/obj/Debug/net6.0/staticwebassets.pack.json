@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/.DS_Store",
-      "PackagePath": "staticwebassets/.DS_Store"
-    },
-    {
       "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/ResetPassword.html",
       "PackagePath": "staticwebassets/verification/ResetPassword.html"
     },

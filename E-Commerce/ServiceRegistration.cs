@@ -12,17 +12,18 @@ using Microsoft.OpenApi.Models;
 using E_Commerce.Business.Configratuions;
 using E_Commerce.Data;
 using Microsoft.AspNetCore.Mvc.Routing;
-using E_Commerce.Business.DTOs.CategoryDto;
+using E_Commerce.Business.Mappings;
+using E_Commerce.DTOs.CategoryDto;
 using Web_Api.Business.Services;
 
-namespace Web_Api
+namespace E_Commerce
 {
     public static class ServiceRegistration
     {
         public static void Registration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers()
-                .AddFluentValidation(d => d.RegisterValidatorsFromAssemblyContaining<CategoryCreateDto>())
+                .AddFluentValidation(d => d.RegisterValidatorsFromAssemblyContaining<CreateCategoryDto>())
                 .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -34,21 +35,22 @@ namespace Web_Api
                     policy.AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    .SetIsOriginAllowed(orign => true);
-                    policy.WithOrigins("http://localhost:8080", "https://on-trend.netlify.app", "https://rewear.site");
+                    //.SetIsOriginAllowed(orign => true);
+                    //policy.WithOrigins("https://localhost:7052/", "https://localhost:7052/", "https://localhost:7052/");
+                    .WithOrigins("https://localhost:7052/");
                 });
             });
             services.AddSignalR();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            //services.AddStackExchangeRedisCache(option =>
-            //{
-            //    option.Configuration = "localhost:6379";
-            //});
+            services.AddStackExchangeRedisCache(option =>
+            {
+                option.Configuration = "https://localhost:7052/";
+            });
 
             services.AddDbContext<DataContext>(option =>
             {
-                option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                option.UseSqlServer(configuration.GetConnectionString("Default"),
                     opt =>
 
                         opt.MigrationsAssembly("E-Commerce.Data")
@@ -124,15 +126,26 @@ namespace Web_Api
                 option.TokenLifespan = TimeSpan.FromMinutes(10);
 
             });
+            services.AddAutoMapper(typeof(CategoryProfile).Assembly);
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<ISendEmail, SendEmail>();
-            //services.AddScoped<IAccountService, AccountService>();
-            services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<UrlHelperService>();
             services.AddHttpContextAccessor();
             services.AddScoped<ITokenService, TokenService>();
-            services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICheckService, CheckService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IAdressService, AdressService>();
+            services.AddScoped<IChatMessageService, ChatMessageService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Web_Api;
+﻿using E_Commerce;
+using E_Commerce.Business.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -24,6 +25,8 @@ app.UseResponseCaching();
 app.UseCors();
 //StripeConfiguration.ApiKey = config.GetSection("Stripe:Secret_key").Get<string>();
 app.MapControllers();
-//app.MapHub<ChatHub>("/chatHub");
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
+
+
 
