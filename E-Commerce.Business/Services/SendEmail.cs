@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using E_Commerce.Business.Interfaces;
 
-namespace Web_Api.Business.Services
+namespace E_Commerce.Business.Services
 {
 	public class SendEmail: ISendEmail
     {

@@ -20,7 +20,7 @@ namespace E_Commerce.Data.Data
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Country> Countries { get; set; }
-
+        public DbSet<City> Cities { get; set; }
         public DataContext(DbContextOptions context) : base(context)
 		{
 		}

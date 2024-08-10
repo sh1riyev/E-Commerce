@@ -35,6 +35,7 @@
     <None Remove="Validators\UserValidator\" />
     <None Remove="Validators\ChatMessageValidator\" />
     <None Remove="Validators\ProductValidator\" />
+    <None Remove="DTOs\CityDto\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configratuions\" />
@@ -64,6 +65,7 @@
     <Folder Include="Validators\UserValidator\" />
     <Folder Include="Validators\ChatMessageValidator\" />
     <Folder Include="Validators\ProductValidator\" />
+    <Folder Include="DTOs\CityDto\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\E-Commerce.Data\E-Commerce.Data.csproj" />

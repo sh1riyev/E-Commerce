@@ -20,6 +20,7 @@ namespace E_Commerce.Data
         ITagRepository TagRepository { get; }
         IAddressRepository AddressRepository { get; }
         ICountryRepository CountryRepository { get; }
+        ICityRepository CityRepository { get; }
 
         Task<int> Complate();
     }

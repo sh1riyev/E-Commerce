@@ -8,7 +8,7 @@ using E_Commerce.Business.Interfaces;
 using E_Commerce.Core.Entities;
 using E_Commerce.Data;
 
-namespace Web_Api.Business.Services
+namespace E_Commerce.Business.Services
 {
 	public class WishlistService: IWishlistService
     {
