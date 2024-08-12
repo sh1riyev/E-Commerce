@@ -23,6 +23,7 @@ namespace E_Commerce.Data.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Check> Checks { get; set; }
         public DataContext(DbContextOptions context) : base(context)
 		{
 		}

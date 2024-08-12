@@ -3,7 +3,7 @@ using AutoMapper;
 using E_Commerce.Business.DTOs.ProductCommentDto;
 using E_Commerce.Core.Entities;
 
-namespace E_Commerce.Business.Mappings.AuthoMapper
+namespace E_Commerce.Business.Mappings
 {
 	public class ProductCommentProfile:Profile
 	{
