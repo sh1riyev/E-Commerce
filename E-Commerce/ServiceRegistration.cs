@@ -14,7 +14,6 @@ using E_Commerce.Data;
 using Microsoft.AspNetCore.Mvc.Routing;
 using E_Commerce.Business.Mappings;
 using E_Commerce.DTOs.CategoryDto;
-using Web_Api.Business.Services;
 
 namespace E_Commerce
 {
@@ -137,6 +136,8 @@ namespace E_Commerce
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<ISliderService, SliderService>();
+            services.AddScoped<ISettingService, SettingService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICheckService, CheckService>();

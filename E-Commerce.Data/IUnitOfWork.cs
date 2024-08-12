@@ -21,7 +21,8 @@ namespace E_Commerce.Data
         IAddressRepository AddressRepository { get; }
         ICountryRepository CountryRepository { get; }
         ICityRepository CityRepository { get; }
-
+        ISettingRepository SettingRepository { get; }
+        ISliderRepository SliderRepository { get; }
         Task<int> Complate();
     }
 }

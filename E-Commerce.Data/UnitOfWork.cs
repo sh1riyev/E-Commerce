@@ -28,6 +28,8 @@ namespace E_Commerce.Data
             CountryRepository = new CountryRepository(_context);
             CheckProductRepository = new CheckProductRepository(_context);
             CityRepository = new CityRepository(_context);
+            SettingRepository = new SettingRepository(_context);
+            SliderRepository = new SliderRepository(_context);
         }
 
         public ICategoryRepository CategoryRepository { get; private set; }
@@ -46,6 +48,8 @@ namespace E_Commerce.Data
         public ICheckProductRepository CheckProductRepository { get; private set; }
         public ICountryRepository CountryRepository { get; private set; }
         public ICityRepository CityRepository { get; private set; }
+        public ISettingRepository SettingRepository { get; private set; }
+        public ISliderRepository SliderRepository { get; private set; }
 
         public async Task<int> Complate()
         {

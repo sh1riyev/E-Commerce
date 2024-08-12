@@ -11,9 +11,10 @@
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.AssemblyInfoInputs.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.AssemblyInfo.cs
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.csproj.CoreCompileInputs.cache
-/Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.csproj.CopyComplete
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.dll
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/refint/E-Commerce.Business.dll
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.pdb
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.genruntimeconfig.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/ref/E-Commerce.Business.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.sourcelink.json
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commer.52A4135A.Up2Date
