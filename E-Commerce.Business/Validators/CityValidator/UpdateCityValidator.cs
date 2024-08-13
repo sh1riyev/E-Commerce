@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentValidation;
-using Web_Api.Business.DTO.CityDto;
+using E_Commerce.Business.DTOs.CityDto;
 
-namespace Web_Api.Business.Validators.CityValidator
+namespace E_Commerce.Business.Validators.CityValidator
 {
 	public class UpdateCityValidator: AbstractValidator<UpdateCityDto>
     {

@@ -14,6 +14,7 @@ using E_Commerce.Data;
 using Microsoft.AspNetCore.Mvc.Routing;
 using E_Commerce.Business.Mappings;
 using E_Commerce.DTOs.CategoryDto;
+using Web_Api.Business.Services;
 
 namespace E_Commerce
 {
@@ -138,11 +139,19 @@ namespace E_Commerce
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<ISliderService, SliderService>();
             services.AddScoped<ISettingService, SettingService>();
+            services.AddScoped<ISubscribeService, SubscribeService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<ICheckService, CheckService>();
-            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IProductCommentService, ProductCommentService>();
+            services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IBlogCommentService, BlogCommentService>();
+            services.AddScoped<ICompaignsService, CompaignsService>();
+            services.AddScoped<IWishlistService, WishlistService>();
+            services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IAdressService, AdressService>();
+            services.AddScoped<ICheckService, CheckService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IChatMessageService, ChatMessageService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));

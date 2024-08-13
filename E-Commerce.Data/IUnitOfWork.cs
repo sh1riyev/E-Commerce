@@ -1,28 +1,35 @@
 ﻿using System;
 using E_Commerce.Core.Repositories;
+using E_Commerce.Data.Implementations;
+using E_Commerce.Data.Implimentations;
 
 namespace E_Commerce.Data
 {
 	public interface IUnitOfWork : IDisposable
 	{
-        IChatMessageRepository ChatMessageRepository { get; }
-        ICheckRepository CheckRepository { get; }
-        ICheckProductRepository CheckProductRepository { get; }
+        IBrandRepository BrandRepository { get; }
         ICategoryRepository CategoryRepository { get; }
-        IProductRepository ProductRepository { get; }
+        ISettingRepository SettingRepository { get; }
+        ISliderRepository SliderRepository { get; }
+        ISubscribeRepository SubscribeRepository { get; }
+        ITagRepository TagRepository { get; }
         IContactRepository ContactRepository { get; }
+        IProductRepository ProductRepository { get; }
         IProductTagRepository ProductTagRepository { get; }
         IProductImageRepository ProductImageRepository { get; }
         IProductCommentRepository ProductCommentRepository { get; }
+        IBlogRepository BlogRepository { get; }
+        IBlogTagRepository BlogTagRepository { get; }
+        IBlogCommentRepository BlogCommentRepository { get; }
+        ICampaignsRepository CampaignsRepository { get; }
         IWishlistRepository WishlistRepository { get; }
         IBasketRepository BasketRepository { get; }
-        IBrandRepository BrandRepository { get; }
-        ITagRepository TagRepository { get; }
         IAddressRepository AddressRepository { get; }
-        ICountryRepository CountryRepository { get; }
+        ICheckProductRepository CheckProductRepository { get; }
+        ICheckRepository CheckRepository { get; }
         ICityRepository CityRepository { get; }
-        ISettingRepository SettingRepository { get; }
-        ISliderRepository SliderRepository { get; }
+        ICountryRepository CountryRepository { get; }
+        IChatMessageRepository ChatMessageRepository { get; }
         Task<int> Complate();
     }
 }

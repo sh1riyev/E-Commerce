@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper;
-using   E_Commerce.Business.DTOs.UserDto;
+using E_Commerce.Business.DTOs.UserDto;
 using E_Commerce.Core.Entities;
 
 namespace E_Commerce.Business.Mappings

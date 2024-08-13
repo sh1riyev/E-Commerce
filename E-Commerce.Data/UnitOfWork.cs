@@ -9,47 +9,79 @@ namespace E_Commerce.Data
 	public class UnitOfWork : IUnitOfWork
 	{
         private readonly DataContext _context;
-		public UnitOfWork(DataContext context)
-		{
+        public UnitOfWork(DataContext context)
+        {
             _context = context;
+            BrandRepository = new BrandRepository(_context);
             CategoryRepository = new CategoryRepository(_context);
-            ChatMessageRepository = new ChatMessageRepository(_context);
-            CheckRepository = new CheckRepository(_context);
-            ProductRepository = new ProductRepository(_context);
+            SettingRepository = new SettingRepository(_context);
+            SliderRepository = new SliderRepository(_context);
+            SubscribeRepository = new SubscribeRepository(_context);
+            TagRepository = new TagRepository(_context);
             ContactRepository = new ContactRepository(_context);
+            ProductRepository = new ProductRepository(_context);
             ProductTagRepository = new ProductTagRepository(_context);
             ProductImageRepository = new ProductImageRepository(_context);
-            BrandRepository = new BrandRepository(_context);
-            TagRepository = new TagRepository(_context);
             ProductCommentRepository = new ProductCommentRepository(_context);
+            BlogRepository = new BlogRepository(_context);
+            BlogTagRepository = new BlogTagRepository(_context);
+            BlogCommentRepository = new BlogCommentRepository(_context);
+            CampaignsRepository = new CampaignsRepository(_context);
             WishlistRepository = new WishlistRepository(_context);
             BasketRepository = new BasketRepository(_context);
             AddressRepository = new AddressRepository(_context);
-            CountryRepository = new CountryRepository(_context);
+            CheckRepository = new CheckRepository(_context);
             CheckProductRepository = new CheckProductRepository(_context);
             CityRepository = new CityRepository(_context);
-            SettingRepository = new SettingRepository(_context);
-            SliderRepository = new SliderRepository(_context);
+            CountryRepository = new CountryRepository(_context);
+            ChatMessageRepository = new ChatMessageRepository(_context);
         }
 
-        public ICategoryRepository CategoryRepository { get; private set; }
-        public IChatMessageRepository ChatMessageRepository { get; private set; }
-        public ICheckRepository CheckRepository { get; private set; }
-        public IProductRepository ProductRepository { get; private set; }
-        public IContactRepository ContactRepository { get; private set; }
-        public IProductTagRepository ProductTagRepository { get; private set; }
-        public IProductImageRepository ProductImageRepository { get; private set; }
         public IBrandRepository BrandRepository { get; private set; }
-        public ITagRepository TagRepository { get; private set; }
-        public IProductCommentRepository ProductCommentRepository { get; private set; }
-        public IWishlistRepository WishlistRepository { get; private set; }
-        public IBasketRepository BasketRepository { get; private set; }
-        public IAddressRepository AddressRepository { get; private set; }
-        public ICheckProductRepository CheckProductRepository { get; private set; }
-        public ICountryRepository CountryRepository { get; private set; }
-        public ICityRepository CityRepository { get; private set; }
+
+        public ICategoryRepository CategoryRepository { get; private set; }
+
         public ISettingRepository SettingRepository { get; private set; }
+
         public ISliderRepository SliderRepository { get; private set; }
+
+        public ISubscribeRepository SubscribeRepository { get; private set; }
+
+        public ITagRepository TagRepository { get; private set; }
+
+        public IContactRepository ContactRepository { get; private set; }
+
+        public IProductRepository ProductRepository { get; private set; }
+
+        public IProductTagRepository ProductTagRepository { get; private set; }
+
+        public IProductImageRepository ProductImageRepository { get; private set; }
+
+        public IProductCommentRepository ProductCommentRepository { get; private set; }
+
+        public IBlogTagRepository BlogTagRepository { get; private set; }
+
+        public IBlogRepository BlogRepository { get; private set; }
+
+        public IBlogCommentRepository BlogCommentRepository { get; private set; }
+
+        public ICampaignsRepository CampaignsRepository { get; private set; }
+
+        public IWishlistRepository WishlistRepository { get; private set; }
+
+        public IBasketRepository BasketRepository { get; private set; }
+
+        public IAddressRepository AddressRepository { get; private set; }
+
+        public ICheckRepository CheckRepository { get; private set; }
+
+        public ICheckProductRepository CheckProductRepository { get; private set; }
+
+        public ICityRepository CityRepository { get; private set; }
+
+        public ICountryRepository CountryRepository { get; private set; }
+
+        public IChatMessageRepository ChatMessageRepository { get; private set; }
 
         public async Task<int> Complate()
         {
@@ -58,7 +90,7 @@ namespace E_Commerce.Data
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

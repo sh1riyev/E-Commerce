@@ -21,9 +21,14 @@ namespace E_Commerce.Data.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<Setting> Settings { get; set; }
+        public DbSet<Setting> Setting { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Check> Checks { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogTags> BlogTags { get; set; }
+        public DbSet<BlogComment> BlogComments { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Subscribe> Subscribes { get; set; }
         public DataContext(DbContextOptions context) : base(context)
 		{
 		}
