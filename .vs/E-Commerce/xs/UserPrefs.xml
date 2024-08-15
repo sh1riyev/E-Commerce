@@ -1,22 +1,20 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1666D535-F398-47FA-A717-9E437CEA215B}|Default">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce.Business/Services/BasketService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce/Program.cs">
     <Files>
-      <File FileName="E-Commerce.Business/Services/AdressService.cs" Line="10" Column="1" />
-      <File FileName="E-Commerce.Business/Services/SendEmail.cs" Line="1" Column="1" />
-      <File FileName="E-Commerce.Business/Services/BasketService.cs" Line="1" Column="1" />
+      <File FileName="E-Commerce.Business/Validators/CityValidator/UpdateCityValidator.cs" Line="25" Column="1" />
+      <File FileName="E-Commerce/Program.cs" Line="20" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="E-Commerce" expanded="True">
-            <Node name="E-Commerce">
+          <Node name="E-Commerce">
+            <Node name="E-Commerce" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
             </Node>
-            <Node name="E-Commerce.Business">
-              <Node name="Services" expanded="True">
-                <Node name="BasketService.cs" selected="True" />
+            <Node name="E-Commerce.Business" expanded="True">
+              <Node name="Validators" expanded="True">
+                <Node name="CityValidator" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -25,7 +23,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <Breakpoint file="/Users/sh1riyev/Development/E-Commerce/E-Commerce/Program.cs" relfile="E-Commerce/Program.cs" line="10" column="1" />
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.E-Commerce PreferredExecutionTarget="/Applications/Google Chrome.app" />
