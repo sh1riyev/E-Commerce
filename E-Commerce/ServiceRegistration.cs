@@ -14,7 +14,6 @@ using E_Commerce.Data;
 using Microsoft.AspNetCore.Mvc.Routing;
 using E_Commerce.Business.Mappings;
 using E_Commerce.DTOs.CategoryDto;
-using Web_Api.Business.Services;
 
 namespace E_Commerce
 {

@@ -12,7 +12,7 @@ using E_Commerce.Business.DTOs.FilterDto;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Web_Api.Controllers
+namespace E_Commerce.Controllers
 {
     [Authorize(Roles = "Admin,SupperAdmin")]
     [Route("api/[controller]")]

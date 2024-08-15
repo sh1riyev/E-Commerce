@@ -1,5 +1,6 @@
 ﻿using E_Commerce;
 using E_Commerce.Business.Hubs;
+using E_Commerce.Business.Middelware;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.

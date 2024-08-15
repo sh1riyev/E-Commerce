@@ -4,44 +4,47 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-public class GlobalExceptionHandlingMiddleware
+namespace E_Commerce.Business.Middelware
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<GlobalExceptionHandlingMiddleware> _logger;
-
-    public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
+    public class GlobalExceptionHandlingMiddleware
     {
-        _next = next;
-        _logger = logger;
-    }
+        private readonly RequestDelegate _next;
+        private readonly ILogger<GlobalExceptionHandlingMiddleware> _logger;
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-        try
+        public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
         {
-            await _next(context);
+            _next = next;
+            _logger = logger;
         }
-        catch (Exception ex)
+
+        public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogError(ex, "An unexpected error occurred");
-            await HandleExceptionAsync(context, ex);
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred");
+                await HandleExceptionAsync(context, ex);
+            }
         }
-    }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-        var problemDetails = new ProblemDetails
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            Status = (int)HttpStatusCode.InternalServerError,
-            Type = "https://httpstatuses.com/500",
-            Title = "Internal Server Error",
-            Detail = "An unexpected error occurred on the server."
-        };
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-        var json = JsonSerializer.Serialize(problemDetails);
-        return context.Response.WriteAsync(json);
+            var problemDetails = new ProblemDetails
+            {
+                Status = (int)HttpStatusCode.InternalServerError,
+                Type = "https://httpstatuses.com/500",
+                Title = "Internal Server Error",
+                Detail = "An unexpected error occurred on the server."
+            };
+
+            var json = JsonSerializer.Serialize(problemDetails);
+            return context.Response.WriteAsync(json);
+        }
     }
 }

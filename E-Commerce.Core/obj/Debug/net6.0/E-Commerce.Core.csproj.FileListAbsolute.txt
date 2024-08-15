@@ -12,4 +12,3 @@
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.pdb
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.genruntimeconfig.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/ref/E-Commerce.Core.dll
-/Users/sh1riyev/Development/E-Commerce/E-Commerce.Core/obj/Debug/net6.0/E-Commerce.Core.sourcelink.json

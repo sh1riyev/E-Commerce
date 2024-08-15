@@ -96,5 +96,4 @@
 /Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.pdb
 /Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.genruntimeconfig.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/ref/E-Commerce.dll
-/Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.sourcelink.json
-/Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.csproj.Up2Date
+/Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.csproj.CopyComplete

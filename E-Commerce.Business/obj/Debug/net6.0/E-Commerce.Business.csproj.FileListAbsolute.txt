@@ -16,5 +16,4 @@
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.pdb
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.genruntimeconfig.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/ref/E-Commerce.Business.dll
-/Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.sourcelink.json
-/Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commer.52A4135A.Up2Date
+/Users/sh1riyev/Development/E-Commerce/E-Commerce.Business/obj/Debug/net6.0/E-Commerce.Business.csproj.CopyComplete

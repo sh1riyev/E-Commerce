@@ -9,7 +9,7 @@ using E_Commerce.Core.Entities;
 using E_Commerce.Data;
 using Product = E_Commerce.Core.Entities.Product;
 
-namespace Web_Api.Business.Services
+namespace E_Commerce.Business.Services
 {
 	public class ProductCommentService:IProductCommentService
 	{

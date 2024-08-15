@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using E_Commerce.Business.DTOs.CategoryDto;
 using E_Commerce.Business.DTOs.FilterDto;
 using E_Commerce.Business.Helpers;
 using E_Commerce.Business.Interfaces;
-using E_Commerce.Business.Services;
 using E_Commerce.Core.Entities;
-using E_Commerce.Data;
-using E_Commerce.DTOs;
 using E_Commerce.DTOs.CategoryDto;
-using E_Commerce.Core.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -74,7 +65,6 @@ namespace E_Commerce.Controllers
                  return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
             }
         }
-        // POST api/values
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]CreateCategoryDto createCategoryDto)
