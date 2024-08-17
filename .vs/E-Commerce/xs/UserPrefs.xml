@@ -4,18 +4,14 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce/Controllers/ProductController.cs">
-    <Files>
-      <File FileName="E-Commerce/Controllers/ProductController.cs" Line="9" Column="37" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="E-Commerce" expanded="True">
-            <Node name="E-Commerce">
-              <Node name="Controllers" expanded="True">
-                <Node name="ProductController.cs" selected="True" />
-              </Node>
+          <Node name="E-Commerce">
+            <Node name="E-Commerce" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
             </Node>
             <Node name="E-Commerce.Business" expanded="True">
               <Node name="Services" expanded="True" />
