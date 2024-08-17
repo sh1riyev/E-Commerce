@@ -1,27 +1,30 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1666D535-F398-47FA-A717-9E437CEA215B}|Default">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench>
+﻿<Properties StartupConfiguration="{1666D535-F398-47FA-A717-9E437CEA215B}|Default" GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.E-Commerce PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce/Controllers/ProductController.cs">
+    <Files>
+      <File FileName="E-Commerce/Controllers/ProductController.cs" Line="9" Column="37" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="E-Commerce">
-            <Node name="E-Commerce" expanded="True">
-              <Node name="Controllers" expanded="True" />
+          <Node name="E-Commerce" expanded="True">
+            <Node name="E-Commerce">
+              <Node name="Controllers" expanded="True">
+                <Node name="ProductController.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="E-Commerce.Business" expanded="True">
-              <Node name="Validators" expanded="True">
-                <Node name="CityValidator" expanded="True" />
-              </Node>
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.E-Commerce PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
 </Properties>

@@ -126,35 +126,41 @@ namespace E_Commerce
 
             });
             services.AddAutoMapper(typeof(CategoryProfile).Assembly);
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IBrandService, BrandService>();
-            services.AddScoped<ISendEmail, SendEmail>();
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<UrlHelperService>();
+            //services.AddScoped<ICategoryService, CategoryService>();
+            //services.AddScoped<IFileService, FileService>();
+            //services.AddScoped<IBrandService, BrandService>();
+            //services.AddScoped<ISendEmail, SendEmail>();
+            //services.AddScoped<IAccountService, AccountService>();
+            //services.AddScoped<UrlHelperService>();
             services.AddHttpContextAccessor();
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ITagService, TagService>();
-            services.AddScoped<ISliderService, SliderService>();
-            services.AddScoped<ISettingService, SettingService>();
-            services.AddScoped<ISubscribeService, SubscribeService>();
-            services.AddScoped<IContactService, ContactService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IProductCommentService, ProductCommentService>();
-            services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<IBlogCommentService, BlogCommentService>();
-            services.AddScoped<ICompaignsService, CompaignsService>();
-            services.AddScoped<IWishlistService, WishlistService>();
-            services.AddScoped<IBasketService, BasketService>();
-            services.AddScoped<IAdressService, AdressService>();
-            services.AddScoped<ICheckService, CheckService>();
-            services.AddScoped<ICityService, CityService>();
-            services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<IChatMessageService, ChatMessageService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddScoped<ITokenService, TokenService>();
+            //services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<ITagService, TagService>();
+            //services.AddScoped<ISliderService, SliderService>();
+            //services.AddScoped<ISettingService, SettingService>();
+            //services.AddScoped<ISubscribeService, SubscribeService>();
+            //services.AddScoped<IContactService, ContactService>();
+            //services.AddScoped<IProductService, ProductService>();
+            //services.AddScoped<IProductCommentService, ProductCommentService>();
+            //services.AddScoped<IBlogService, BlogService>();
+            //services.AddScoped<IBlogCommentService, BlogCommentService>();
+            //services.AddScoped<ICompaignsService, CompaignsService>();
+            //services.AddScoped<IWishlistService, WishlistService>();
+            //services.AddScoped<IBasketService, BasketService>();
+            //services.AddScoped<IAdressService, AdressService>();
+            //services.AddScoped<ICheckService, CheckService>();
+            //services.AddScoped<ICityService, CityService>();
+            //services.AddScoped<ICountryService, CountryService>();
+            //services.AddScoped<IChatMessageService, ChatMessageService>();
+            //services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
-            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            //services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.Scan(scan =>
+            services.Scan(scan => scan
+                    .FromAssembliesOf(typeof(ICategoryService), typeof(IProductService))
+                    .AddClasses(classes => classes.InNamespaceOf<ICategoryService>())
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime()));
         }
     }
 }

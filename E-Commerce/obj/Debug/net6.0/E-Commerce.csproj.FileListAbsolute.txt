@@ -97,3 +97,6 @@
 /Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.genruntimeconfig.cache
 /Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/ref/E-Commerce.dll
 /Users/sh1riyev/Development/E-Commerce/E-Commerce/obj/Debug/net6.0/E-Commerce.csproj.CopyComplete
+/Users/sh1riyev/Development/E-Commerce/E-Commerce/bin/Debug/net6.0/Microsoft.Extensions.DependencyModel.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce/bin/Debug/net6.0/Scrutor.dll
+/Users/sh1riyev/Development/E-Commerce/E-Commerce/bin/Debug/net6.0/Scrutor.AspNetCore.dll

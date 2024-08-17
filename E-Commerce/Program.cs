@@ -1,6 +1,7 @@
 ﻿using E_Commerce;
 using E_Commerce.Business.Hubs;
 using E_Commerce.Business.Middelware;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -24,7 +25,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseResponseCaching();
 app.UseCors();
-//StripeConfiguration.ApiKey = config.GetSection("Stripe:Secret_key").Get<string>();
+StripeConfiguration.ApiKey = config.GetSection("Stripe:Secret_key").Get<string>();
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 app.Run();
