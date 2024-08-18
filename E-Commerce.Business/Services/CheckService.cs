@@ -30,7 +30,7 @@ namespace E_Commerce.Business.Services
                     StatusCode = (int)StatusCodes.Status404NotFound,
                     ResponseMessage = "this user is not exist"
                 };
-                else if (!await _unitOfWork.AddressRepository.IsExist(a => a.Id == entity.AdressId && !a.IsDeleted)) return new ResponseObj
+                else if (!await _unitOfWork.AdressRepository.IsExist(a => a.Id == entity.AdressId && !a.IsDeleted)) return new ResponseObj
                 {
                     StatusCode = (int)StatusCodes.Status404NotFound,
                     ResponseMessage = "this adress is not exist"
@@ -127,7 +127,7 @@ namespace E_Commerce.Business.Services
                 StatusCode = (int)StatusCodes.Status404NotFound,
                 ResponseMessage = "this user is not exist"
             };
-            else if (!await _unitOfWork.AddressRepository.IsExist(a => a.Id == entity.AdressId && !a.IsDeleted)) return new ResponseObj
+            else if (!await _unitOfWork.AdressRepository.IsExist(a => a.Id == entity.AdressId && !a.IsDeleted)) return new ResponseObj
             {
                 StatusCode = (int)StatusCodes.Status404NotFound,
                 ResponseMessage = "this adress is not exist"

@@ -24,7 +24,7 @@ namespace E_Commerce.Core.Entities
         public ICollection<ChatMessage> SentMessages { get; set; }
         public ICollection<ChatMessage> ReceivedMessages { get; set; }
         public List<Check> Checkes { get; set; }
-        public List<Address> Adresses { get; set; }
+        public List<Adress> Adresses { get; set; }
         public List<Wishlist> Wishlists { get; set; }
         public List<Basket> Baskets { get; set; }
         public AppUser()

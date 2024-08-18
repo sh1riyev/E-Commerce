@@ -4,31 +4,30 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce/Controllers/CompaignsController.cs">
-    <Files>
-      <File FileName="E-Commerce/Controllers/CheckOutController.cs" Line="206" Column="17" />
-      <File FileName="E-Commerce/Controllers/CompaignsController.cs" Line="48" Column="19" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="E-Commerce">
-            <Node name="E-Commerce">
-              <Node name="Controllers" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
+          <Node name="E-Commerce" expanded="True">
+            <Node name="E-Commerce" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="TagController.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="E-Commerce.Business" expanded="True">
-              <Node name="Configratuions" expanded="True" />
-              <Node name="Validators" expanded="True">
-                <Node name="AdressValidator" expanded="True" />
+              <Node name="DTOs" expanded="True">
+                <Node name="AddressDto" expanded="True" />
               </Node>
+              <Node name="Services" expanded="True" />
             </Node>
             <Node name="E-Commerce.Core" expanded="True">
-              <Node name="Entities" expanded="True">
-                <Node name="Compaign.cs" selected="True" />
-              </Node>
+              <Node name="Entities" expanded="True" />
             </Node>
-            <Node name="E-Commerce.Data" expanded="True" />
+            <Node name="E-Commerce.Data">
+              <Node name="Configurations" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="E-Commerce" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>

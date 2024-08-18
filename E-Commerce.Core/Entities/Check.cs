@@ -9,7 +9,7 @@ namespace E_Commerce.Core.Entities
         public double Sale { get; set; }
         [ForeignKey(nameof(Adress))]
         public string AdressId { get; set; }
-        public Address Adress { get; set; }
+        public Adress Adress { get; set; }
         public List<CheckProduct> CheckProducts { get; set; }
         public int Status { get; set; }
         [ForeignKey(nameof(AppUser))]

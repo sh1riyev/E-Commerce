@@ -28,8 +28,8 @@ namespace E_Commerce.Controllers
         private readonly IAdressService _adressService;
         private readonly IMapper _mapper;
         private readonly ISendEmail _sendEmail;
-        private readonly string _publicUrl = "https://rewear.site/";
-        private readonly string _privateUrl = "http://localhost:8080/";
+        private readonly string _publicUrl = "https://localhost:7052/";
+        private readonly string _privateUrl = "https://localhost:7052/";
         public CheckOutController(IAdressService adressService,ICompaignsService compaignsService,UserManager<AppUser>userManager,ICheckService checkService,IBasketService basketService,IProductService productService,IMapper mapper,ISendEmail sendEmail)
         {
             _adressService = adressService;
@@ -72,7 +72,7 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest("dont have any busket");
             }
-            Address adress = await _adressService.GetEntity(a => a.Id == checkOutDto.AdressId, "City");
+            Adress adress = await _adressService.GetEntity(a => a.Id == checkOutDto.AdressId, "City");
             AppUser user = await _userManager.FindByIdAsync(checkOutDto.UserId);
             if (user.PhoneNumber==null)
             {
@@ -169,7 +169,7 @@ namespace E_Commerce.Controllers
             {
                 return BadRequest("something went wrong");
             }
-            Address adress = await _adressService.GetEntity(a => a.Id == confirmBasketDto.AdressId, "City");
+            Adress adress = await _adressService.GetEntity(a => a.Id == confirmBasketDto.AdressId, "City");
             var service = new SessionService();
             Session session = service.Get(confirmBasketDto.SesionId);
             if (session.PaymentStatus != "paid")
