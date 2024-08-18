@@ -21,10 +21,10 @@ namespace E_Commerce.Data
         IBlogRepository BlogRepository { get; }
         IBlogTagRepository BlogTagRepository { get; }
         IBlogCommentRepository BlogCommentRepository { get; }
-        ICampaignsRepository CampaignsRepository { get; }
+        ICompaignsRepository CompaignsRepository { get; }
         IWishlistRepository WishlistRepository { get; }
         IBasketRepository BasketRepository { get; }
-        IAddressRepository AddressRepository { get; }
+        IAdressRepository AdressRepository { get; }
         ICheckProductRepository CheckProductRepository { get; }
         ICheckRepository CheckRepository { get; }
         ICityRepository CityRepository { get; }

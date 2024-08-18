@@ -6,9 +6,9 @@ using E_Commerce.Data.Implimentations;
 
 namespace E_Commerce.Data.Implementations
 {
-	public class AddressRepository : Repository<Address>,IAddressRepository
+	public class AdressRepository : Repository<Adress>,IAdressRepository
 	{
-		public AddressRepository(DataContext context) : base(context)
+		public AdressRepository(DataContext context) : base(context)
 		{
 		}
 	}

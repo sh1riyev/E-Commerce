@@ -3,7 +3,7 @@ using E_Commerce.Core.Entities;
 
 namespace E_Commerce.Business.Interfaces
 {
-	public interface ICompaignsService:IService<Campaign>
+	public interface ICompaignsService:IService<Compaigns>
 	{
 	}
 }

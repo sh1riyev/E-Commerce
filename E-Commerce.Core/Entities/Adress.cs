@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Commerce.Core.Entities
 {
-	public class Address : BaseEntity
+	public class Adress : BaseEntity
 	{
         public string LocationName { get; set; }
         public string Street { get; set; }
@@ -15,7 +15,7 @@ namespace E_Commerce.Core.Entities
         [ForeignKey(nameof(AppUser))]
         public string UserId { get; set; }
         public AppUser AppUser { get; set; }
-        public Address()
+        public Adress()
 		{
 		}
 	}

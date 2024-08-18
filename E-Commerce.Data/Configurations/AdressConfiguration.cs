@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace E_Commerce.Data.Configurations
 {
-	public class AddressConfiguration: BaseEntityConfiguration<Address>
+	public class AdressConfiguration: BaseEntityConfiguration<Adress>
     {
-		public AddressConfiguration()
+		public AdressConfiguration()
 		{
 		}
-        public override void Configure(EntityTypeBuilder<Address> builder)
+        public override void Configure(EntityTypeBuilder<Adress> builder)
         {
             builder.HasCheckConstraint("CK_Address_LocationName_MinLength", "LEN(LocationName) >= 3");
             builder.HasCheckConstraint("CK_Address_Street_MinLength", "LEN(Street) >= 3");

@@ -5,9 +5,9 @@ using E_Commerce.Data.Data;
 
 namespace E_Commerce.Data.Implimentations
 {
-	public class CampaignsRepository:Repository<Campaign>, ICampaignsRepository
+	public class CompaignsRepository:Repository<Compaigns>, ICompaignsRepository
     {
-		public CampaignsRepository(DataContext context) : base(context)
+		public CompaignsRepository(DataContext context) : base(context)
         {
 		}
 	}

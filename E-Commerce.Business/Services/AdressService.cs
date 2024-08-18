@@ -20,7 +20,7 @@ namespace E_Commerce.Business.Services
             _userManager = userManager;
 		}
 
-        public async Task<ResponseObj> Create(Address entity)
+        public async Task<ResponseObj> Create(Adress entity)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace E_Commerce.Business.Services
                     StatusCode = (int)StatusCodes.Status404NotFound,
                     ResponseMessage = "this City is not exist"
                 };
-                await _unitOfWork.AddressRepository.Create(entity);
+                await _unitOfWork.AdressRepository.Create(entity);
                 await _unitOfWork.Complate();
                 return new ResponseObj
                 {
@@ -57,10 +57,10 @@ namespace E_Commerce.Business.Services
                     StatusCode = (int)StatusCodes.Status404NotFound,
                     ResponseMessage = "Address is not exist"
                 };
-                Address adress = await GetEntity(a => a.Id == id);
+                Adress adress = await GetEntity(a => a.Id == id);
                 adress.IsDeleted = true;
                 adress.DeletedAt = DateTime.Now;
-                await _unitOfWork.AddressRepository.Update(adress);
+                await _unitOfWork.AdressRepository.Update(adress);
                 await _unitOfWork.Complate();
                 return new ResponseObj
                 {
@@ -74,11 +74,11 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<List<Address>> GetAll(Expression<Func<Address, bool>> predicate = null, params string[] includes)
+        public async Task<List<Adress>> GetAll(Expression<Func<Adress, bool>> predicate = null, params string[] includes)
         {
             try
             {
-                return await _unitOfWork.AddressRepository.GetAll(predicate, includes);
+                return await _unitOfWork.AdressRepository.GetAll(predicate, includes);
             }
             catch (Exception ex)
             {
@@ -86,11 +86,11 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<Address> GetEntity(Expression<Func<Address, bool>> predicate = null, params string[] includes)
+        public async Task<Adress> GetEntity(Expression<Func<Adress, bool>> predicate = null, params string[] includes)
         {
             try
             {
-                return await _unitOfWork.AddressRepository.GetEntity(predicate, includes);
+                return await _unitOfWork.AdressRepository.GetEntity(predicate, includes);
             }
             catch (Exception ex)
             {
@@ -98,11 +98,11 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<bool> IsExist(Expression<Func<Address, bool>> predicate = null)
+        public async Task<bool> IsExist(Expression<Func<Adress, bool>> predicate = null)
         {
             try
             {
-                return await _unitOfWork.AddressRepository.IsExist(predicate);
+                return await _unitOfWork.AdressRepository.IsExist(predicate);
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<ResponseObj> Update(Address entity)
+        public async Task<ResponseObj> Update(Adress entity)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace E_Commerce.Business.Services
                 {
                     entity.DeletedAt = null;
                 }
-                await _unitOfWork.AddressRepository.Update(entity);
+                await _unitOfWork.AdressRepository.Update(entity);
                 await _unitOfWork.Complate();
                 return new ResponseObj
                 {

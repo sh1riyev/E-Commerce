@@ -1,7 +1,7 @@
 ﻿using System;
 namespace E_Commerce.Core.Entities
 {
-	public class Campaign : BaseEntity
+	public class Compaigns : BaseEntity
 	{
         public string Headling { get; set; }
         public string Content { get; set; }
@@ -10,7 +10,7 @@ namespace E_Commerce.Core.Entities
         public string ImageUrl { get; set; }
         public string PublicId { get; set; }
         public double Sale { get; set; }
-        public Campaign()
+        public Compaigns()
 		{
 		}
 	}

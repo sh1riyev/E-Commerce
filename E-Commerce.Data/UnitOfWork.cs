@@ -26,10 +26,10 @@ namespace E_Commerce.Data
             BlogRepository = new BlogRepository(_context);
             BlogTagRepository = new BlogTagRepository(_context);
             BlogCommentRepository = new BlogCommentRepository(_context);
-            CampaignsRepository = new CampaignsRepository(_context);
+            CompaignsRepository = new CompaignsRepository(_context);
             WishlistRepository = new WishlistRepository(_context);
             BasketRepository = new BasketRepository(_context);
-            AddressRepository = new AddressRepository(_context);
+            AdressRepository = new AdressRepository(_context);
             CheckRepository = new CheckRepository(_context);
             CheckProductRepository = new CheckProductRepository(_context);
             CityRepository = new CityRepository(_context);
@@ -65,13 +65,13 @@ namespace E_Commerce.Data
 
         public IBlogCommentRepository BlogCommentRepository { get; private set; }
 
-        public ICampaignsRepository CampaignsRepository { get; private set; }
+        public ICompaignsRepository CompaignsRepository { get; private set; }
 
         public IWishlistRepository WishlistRepository { get; private set; }
 
         public IBasketRepository BasketRepository { get; private set; }
 
-        public IAddressRepository AddressRepository { get; private set; }
+        public IAdressRepository AdressRepository { get; private set; }
 
         public ICheckRepository CheckRepository { get; private set; }
 

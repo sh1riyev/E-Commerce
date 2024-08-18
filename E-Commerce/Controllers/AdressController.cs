@@ -30,7 +30,7 @@ namespace E_Commerce.Controllers
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
-                ResponseObj responseObj = await _adressService.Create(_mapper.Map<Address>(createAdressDto));
+                ResponseObj responseObj = await _adressService.Create(_mapper.Map<Adress>(createAdressDto));
                 if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
                 else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
                 return Ok(responseObj);
@@ -64,7 +64,7 @@ namespace E_Commerce.Controllers
                 if (id == null || id != updateAdressDto.Id) return BadRequest();
                 else if (!ModelState.IsValid) return BadRequest(ModelState);
                 else if (!await _adressService.IsExist(a => a.Id == id)) return NotFound("adress is not exist");
-                Address adress = await _adressService.GetEntity(a => a.Id == id);
+                Adress adress = await _adressService.GetEntity(a => a.Id == id);
                 _mapper.Map(updateAdressDto, adress);
                 ResponseObj responseObj = await _adressService.Update(adress);
                 if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
@@ -107,7 +107,7 @@ namespace E_Commerce.Controllers
             try
             {
                 if (id == null) return BadRequest("something went wrong");
-                Address adress = await _adressService.GetEntity(a => a.Id == id && !a.IsDeleted, "AppUser", "City.Country");
+                Adress adress = await _adressService.GetEntity(a => a.Id == id && !a.IsDeleted, "AppUser", "City.Country");
                 if (adress == null)
                 {
                     return NotFound("adress is not exist");
@@ -126,7 +126,7 @@ namespace E_Commerce.Controllers
             try
             {
                 if (id == null) return BadRequest();
-                Address adress = await _adressService.GetEntity(c => c.Id == id, "AppUser", "City.Country");
+                Adress adress = await _adressService.GetEntity(c => c.Id == id, "AppUser", "City.Country");
                 if (adress == null)
                 {
                     return NotFound();
@@ -147,7 +147,7 @@ namespace E_Commerce.Controllers
                 DateTime last = filterStatus.Status == (int)EntityFilter.GetLastDayCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekCreatedByAdmin ? DateTime.Now.AddDays(-1) :
                     filterStatus.Status == (int)EntityFilter.GetLastDayDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekDeletedByAdmin ? DateTime.Now.AddDays(-7) :
                     filterStatus.Status == (int)EntityFilter.GetLastDayUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekUpdatedByAdmin ? DateTime.Now.AddDays(-30) : DateTime.Now;
-                Expression<Func<Address, bool>> filter = entity =>filterStatus.Status>0&&filterStatus.Status<4? entity.CreatedAt >= last: filterStatus.Status > 3 && filterStatus.Status < 7 ? entity.DeletedAt >= last: filterStatus.Status > 6 && filterStatus.Status < 10 ? entity.UpdatedAt >= last:default;
+                Expression<Func<Adress, bool>> filter = entity =>filterStatus.Status>0&&filterStatus.Status<4? entity.CreatedAt >= last: filterStatus.Status > 3 && filterStatus.Status < 7 ? entity.DeletedAt >= last: filterStatus.Status > 6 && filterStatus.Status < 10 ? entity.UpdatedAt >= last:default;
                 return Ok(_mapper.Map<List<GetAdressByAdmin>>(
                             await _adressService.GetAll(filter, "AppUser", "City.Country")
                         ));
@@ -178,7 +178,7 @@ namespace E_Commerce.Controllers
         {
             try
             {
-                List<Address> adresses = await _adressService.GetAll(null, "AppUser", "City.Country");
+                List<Adress> adresses = await _adressService.GetAll(null, "AppUser", "City.Country");
                 var data = _mapper.Map<List<GetAdressByAdmin>>(adresses.OrderBy(s => s.CreatedAt).Skip(skip).Take(take));
                 return Ok(new { size = adresses.Count, data });
             }

@@ -16,7 +16,7 @@ namespace E_Commerce.Business.Services
             _unitOfWork = unitOfWork;
 		}
 
-        public async Task<ResponseObj> Create(Campaign entity)
+        public async Task<ResponseObj> Create(Compaigns entity)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace E_Commerce.Business.Services
                         ResponseMessage = "Compaign is exist"
                     };
                 }
-                await _unitOfWork.CampaignsRepository.Create(entity);
+                await _unitOfWork.CompaignsRepository.Create(entity);
                 await _unitOfWork.Complate();
                 return new ResponseObj
                 {
@@ -62,7 +62,7 @@ namespace E_Commerce.Business.Services
                         ResponseMessage = "Compaign is not exist"
                     };
                 }
-                Campaign compaign = await GetEntity(c => c.Id == id);
+                Compaigns compaign = await GetEntity(c => c.Id == id);
                 if (compaign.IsDeleted)
                 {
                     return new ResponseObj
@@ -73,7 +73,7 @@ namespace E_Commerce.Business.Services
                 }
                 compaign.IsDeleted = true;
                 compaign.DeletedAt = DateTime.Now;
-                await _unitOfWork.CampaignsRepository.Update(compaign);
+                await _unitOfWork.CompaignsRepository.Update(compaign);
                 await _unitOfWork.Complate();
                 return new ResponseObj
                 {
@@ -88,11 +88,11 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<List<Campaign>> GetAll(Expression<Func<Campaign, bool>> predicate = null, params string[] includes)
+        public async Task<List<Compaigns>> GetAll(Expression<Func<Compaigns, bool>> predicate = null, params string[] includes)
         {
             try
             {
-                return await _unitOfWork.CampaignsRepository.GetAll(predicate, includes);
+                return await _unitOfWork.CompaignsRepository.GetAll(predicate, includes);
             }
             catch (Exception ex)
             {
@@ -100,11 +100,11 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<Campaign> GetEntity(Expression<Func<Campaign, bool>> predicate = null, params string[] includes)
+        public async Task<Compaigns> GetEntity(Expression<Func<Compaigns, bool>> predicate = null, params string[] includes)
         {
             try
             {
-                return await _unitOfWork.CampaignsRepository.GetEntity(predicate, includes);
+                return await _unitOfWork.CompaignsRepository.GetEntity(predicate, includes);
             }
             catch (Exception ex)
             {
@@ -112,11 +112,11 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<bool> IsExist(Expression<Func<Campaign, bool>> predicate = null)
+        public async Task<bool> IsExist(Expression<Func<Compaigns, bool>> predicate = null)
         {
             try
             {
-                return await _unitOfWork.CampaignsRepository.IsExist(predicate);
+                return await _unitOfWork.CompaignsRepository.IsExist(predicate);
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ namespace E_Commerce.Business.Services
             }
         }
 
-        public async Task<ResponseObj> Update(Campaign entity)
+        public async Task<ResponseObj> Update(Compaigns entity)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace E_Commerce.Business.Services
                 {
                     entity.DeletedAt = null;
                 }
-                await _unitOfWork.CampaignsRepository.Update(entity);
+                await _unitOfWork.CompaignsRepository.Update(entity);
                 await _unitOfWork.Complate();
                 return new ResponseObj
                 {

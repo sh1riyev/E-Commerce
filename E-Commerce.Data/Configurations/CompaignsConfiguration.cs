@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace E_Commerce.Data.Configurations
 {
-	public class CompaignsConfiguration: BaseEntityConfiguration<Campaign>
+	public class CompaignsConfiguration: BaseEntityConfiguration<Compaigns>
     {
 		public CompaignsConfiguration()
 		{
 		}
-        public override void Configure(EntityTypeBuilder<Campaign> builder)
+        public override void Configure(EntityTypeBuilder<Compaigns> builder)
         {
             builder.Property(c => c.Sale).HasDefaultValue(0);
             builder.HasCheckConstraint("CK_Configure_Headling_MinLength", "LEN(Headling) >= 3 AND LEN(Headling)  <= 100");

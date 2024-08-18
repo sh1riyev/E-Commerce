@@ -9,10 +9,10 @@ namespace E_Commerce.Business.Mappings
 	{
 		public CompaignsProfile()
 		{
-			CreateMap<Campaign, CreateCompaignsDto>().ReverseMap();
-			CreateMap<Campaign, UpdateCompaignsDto>().ReverseMap();
-			CreateMap<Campaign, GetCompaignsByAdminDto>().ReverseMap();
-			CreateMap<Campaign, GetCompaignsDto>().ReverseMap();
+			CreateMap<Compaigns, CreateCompaignsDto>().ReverseMap();
+			CreateMap<Compaigns, UpdateCompaignsDto>().ReverseMap();
+			CreateMap<Compaigns, GetCompaignsByAdminDto>().ReverseMap();
+			CreateMap<Compaigns, GetCompaignsDto>().ReverseMap();
         }
 	}
 }
