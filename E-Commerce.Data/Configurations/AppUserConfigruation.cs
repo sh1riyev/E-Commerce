@@ -50,7 +50,7 @@ namespace E_Commerce.Data.Configurations
                 EmailConfirmed = true,
                 IsActive = true,
                 IsSeller = true,
-                FullName = "Rufat Code",
+                FullName = "Ilgar Shiriyev",
                 PhoneNumber = "+994508802323",
                 PhoneNumberConfirmed = true,
                 CreatedAt = DateTime.Now,
