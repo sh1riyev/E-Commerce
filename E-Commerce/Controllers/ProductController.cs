@@ -491,7 +491,7 @@ namespace E_Commerce.Controllers
             };
             options.LineItems.Add(sessionListItem);
             var service = new SessionService();
-            Session session = service.Create(options);
+            Session session = await service.CreateAsync(options);
             return Ok(new { Url = session.Url, SesionId = session.Id, ProductId = product.Id, Degre = degre });
         }
         [HttpPost("ConfirmPayment")]

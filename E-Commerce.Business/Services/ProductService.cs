@@ -45,11 +45,15 @@ namespace E_Commerce.Business.Services
                 StatusCode = (int)StatusCodes.Status404NotFound,
                 ResponseMessage = "this user is not exist"
             };
-            else if (!entity.ProductTags.Any(pt => _unitOfWork.TagRepository.IsExist(t => t.Id == pt.TagId && !t.IsDeleted).Result)) return new ResponseObj
+            var tagExistsTasks = entity.ProductTags.Select(pt => _unitOfWork.TagRepository.IsExist(t => t.Id == pt.TagId && !t.IsDeleted));
+            if (!(await Task.WhenAll(tagExistsTasks)).All(exists => exists))
             {
-                StatusCode = (int)StatusCodes.Status404NotFound,
-                ResponseMessage = "tag is not exist"
-            };
+                return new ResponseObj
+                {
+                    StatusCode = (int)StatusCodes.Status404NotFound,
+                    ResponseMessage = "One or more tags do not exist"
+                };
+            }
             foreach (var tag in entity.ProductTags)
             {
                 await _unitOfWork.ProductTagRepository.Create(tag);
