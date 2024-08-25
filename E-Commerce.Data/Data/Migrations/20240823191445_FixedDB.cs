@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace E_Commerce.Data.Data
+namespace E_Commerce.Data.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class FixedDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,7 @@ namespace E_Commerce.Data.Data
                     ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 18, 48, 33, 800, DateTimeKind.Utc).AddTicks(6290)),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 23, 23, 14, 44, 846, DateTimeKind.Utc).AddTicks(9310)),
                     RemovedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsSeller = table.Column<bool>(type: "bit", nullable: false),
@@ -61,7 +61,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "Brand",
+                name: "Brands",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -72,16 +72,43 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(6320))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 924, DateTimeKind.Utc).AddTicks(3210))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brand", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                     table.CheckConstraint("CK_Brand_Name_MinLength", "LEN(Name) >= 3");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Campaign",
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ParentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 924, DateTimeKind.Utc).AddTicks(3780))
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.CheckConstraint("CK_Category_Name_MinLength", "LEN(Name) >= 3");
+                    table.ForeignKey(
+                        name: "FK_Categories_Categories_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Compaigns",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -96,11 +123,11 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 900, DateTimeKind.Utc).AddTicks(8300))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(1130))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Campaign", x => x.Id);
+                    table.PrimaryKey("PK_Compaigns", x => x.Id);
                     table.CheckConstraint("CK_Configure_Content_MinLength", "LEN(Content) >= 10");
                     table.CheckConstraint("CK_Configure_Headling_MinLength", "LEN(Headling) >= 3 AND LEN(Headling)  <= 100");
                     table.CheckConstraint("CK_Configure_Info_MinLength", "LEN(Info) >= 3 AND LEN(Info)  <= 100");
@@ -108,34 +135,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ParentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IsMain = table.Column<bool>(type: "bit", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(7230))
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Category", x => x.Id);
-                    table.CheckConstraint("CK_Category_Name_MinLength", "LEN(Name) >= 3");
-                    table.ForeignKey(
-                        name: "FK_Category_Category_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Category",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Contact",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -149,11 +149,11 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(4990))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(1770))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contact", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                     table.CheckConstraint("CK_Contact_Email_MinLength", "LEN(Email) >= 3");
                     table.CheckConstraint("CK_Contact_Message_MinLength", "LEN(Message) >= 5");
                     table.CheckConstraint("CK_Contact_Name_MinLength", "LEN(Name) >= 3");
@@ -161,7 +161,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "Country",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -170,16 +170,16 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(5780))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(2340))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                     table.CheckConstraint("CK_Country_Name_MinLength", "LEN(Name) >= 3");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Setting",
+                name: "Settings",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -189,16 +189,16 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 902, DateTimeKind.Utc).AddTicks(5180))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(6170))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Setting", x => x.Id);
+                    table.PrimaryKey("PK_Settings", x => x.Id);
                     table.CheckConstraint("CK_Setting_Value_MinLength", "LEN(Value) >= 3");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Slider",
+                name: "Sliders",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -212,11 +212,11 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(1670))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(6750))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Slider", x => x.Id);
+                    table.PrimaryKey("PK_Sliders", x => x.Id);
                     table.CheckConstraint("CK_Slider_Content_MinLength", "LEN(Content) >= 10");
                     table.CheckConstraint("CK_Slider_Description_MinLength", "LEN(Description) >= 10");
                     table.CheckConstraint("CK_Slider_Information_MinLength", "LEN(Information) >= 3");
@@ -224,7 +224,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subscribe",
+                name: "Subscribes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -234,17 +234,17 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(6650))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(7270))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subscribe", x => x.Id);
+                    table.PrimaryKey("PK_Subscribes", x => x.Id);
                     table.CheckConstraint("CK_Subscribe_Email_MinLength", "LEN(Email) >= 3");
                     table.CheckConstraint("CK_Subscribe_Gender_MinLength", "LEN(Gender) >= 3");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tag",
+                name: "Tags",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -253,11 +253,11 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(7440))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(7810))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tag", x => x.Id);
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                     table.CheckConstraint("CK_Tag_Name_MinLength", "LEN(Name) >= 3");
                 });
 
@@ -368,7 +368,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "Blog",
+                name: "Blogs",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -384,18 +384,18 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(4630))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 924, DateTimeKind.Utc).AddTicks(2030))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blog", x => x.Id);
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
                     table.CheckConstraint("CK_Blog_Content_MinLength", "LEN(Content) >= 5");
                     table.CheckConstraint("CK_Blog_Description_MinLength", "LEN(Description) >= 20");
                     table.CheckConstraint("CK_Blog_Information_MinLength", "LEN(Information) >= 5");
                     table.CheckConstraint("CK_Blog_Title_MinLength", "LEN(Title) >= 3");
                     table.CheckConstraint("CK_Blog_ViewCount", "[ViewCount] >= 0");
                     table.ForeignKey(
-                        name: "FK_Blog_AspNetUsers_UserId",
+                        name: "FK_Blogs_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -417,7 +417,7 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(5190))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 925, DateTimeKind.Utc).AddTicks(6940))
                 },
                 constraints: table =>
                 {
@@ -438,7 +438,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -468,11 +468,11 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(9560))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(5030))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.CheckConstraint("CK_Product_Color_MinLength", "LEN(Color) >= 3");
                     table.CheckConstraint("CK_Product_Content_MinLength", "LEN(Content) >= 10");
                     table.CheckConstraint("CK_Product_Count_MinLength", "[Count] >= 0");
@@ -487,27 +487,27 @@ namespace E_Commerce.Data.Data
                     table.CheckConstraint("CK_Product_VipDegre_MinLength", "[VipDegre] >= 0");
                     table.CheckConstraint("CK_Product_Weight_MinLength", "[Weight] >= 0");
                     table.ForeignKey(
-                        name: "FK_Product_AspNetUsers_SellerId",
+                        name: "FK_Products_AspNetUsers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_Brand_BrandId",
+                        name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
-                        principalTable: "Brand",
+                        principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoryId",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "City",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -518,23 +518,23 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(9680))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(410))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                     table.CheckConstraint("CK_City_DeliverPrice_MinLength", "[DeliverPrice] >= 0");
                     table.CheckConstraint("CK_City_Name_MinLength", "LEN(Name) >= 3");
                     table.ForeignKey(
-                        name: "FK_City_Country_CountryId",
+                        name: "FK_Cities_Countries_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Country",
+                        principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BlogComment",
+                name: "BlogComments",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -546,26 +546,26 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(3610))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 924, DateTimeKind.Utc).AddTicks(1270))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlogComment", x => x.Id);
+                    table.PrimaryKey("PK_BlogComments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BlogComment_AspNetUsers_UserId",
+                        name: "FK_BlogComments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BlogComment_Blog_BlogId",
-                        column: x => x.BlogId,
-                        principalTable: "Blog",
+                        name: "FK_BlogComments_BlogComments_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "BlogComments",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_BlogComment_BlogComment_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "BlogComment",
+                        name: "FK_BlogComments_Blogs_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blogs",
                         principalColumn: "Id");
                 });
 
@@ -580,27 +580,27 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(5450))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 924, DateTimeKind.Utc).AddTicks(2580))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BlogTags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BlogTags_Blog_BlogId",
+                        name: "FK_BlogTags_Blogs_BlogId",
                         column: x => x.BlogId,
-                        principalTable: "Blog",
+                        principalTable: "Blogs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BlogTags_Tag_TagId",
+                        name: "FK_BlogTags_Tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "Tag",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Basket",
+                name: "Baskets",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -611,28 +611,28 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 897, DateTimeKind.Utc).AddTicks(1550))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 924, DateTimeKind.Utc).AddTicks(160))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Basket", x => x.Id);
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
                     table.CheckConstraint("CK_Basket_Count_MinLength", "[Count] >= 0");
                     table.ForeignKey(
-                        name: "FK_Basket_AspNetUsers_UserId",
+                        name: "FK_Baskets_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Basket_Product_ProductId",
+                        name: "FK_Baskets_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductComment",
+                name: "ProductComments",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -644,27 +644,27 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 901, DateTimeKind.Utc).AddTicks(8030))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(3950))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductComment", x => x.Id);
+                    table.PrimaryKey("PK_ProductComments", x => x.Id);
                     table.CheckConstraint("CK_ProductComment_Rating_MinLength", "[Rating] >= 0 AND [Rating] <=5");
                     table.ForeignKey(
-                        name: "FK_ProductComment_AspNetUsers_UserId",
+                        name: "FK_ProductComments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductComment_Product_ProductId",
+                        name: "FK_ProductComments_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductImage",
+                name: "ProductImages",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -675,21 +675,21 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 902, DateTimeKind.Utc).AddTicks(310))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(5540))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductImage", x => x.Id);
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductImage_Product_ProductId",
+                        name: "FK_ProductImages_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductTag",
+                name: "ProductTags",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -699,27 +699,27 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 904, DateTimeKind.Utc).AddTicks(10))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(9660))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductTag", x => x.Id);
+                    table.PrimaryKey("PK_ProductTags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductTag_Product_ProductId",
+                        name: "FK_ProductTags_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductTag_Tag_TagId",
+                        name: "FK_ProductTags_Tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "Tag",
+                        principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Wishlist",
+                name: "Wishlists",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -729,27 +729,27 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 903, DateTimeKind.Utc).AddTicks(9190))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 926, DateTimeKind.Utc).AddTicks(9090))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Wishlist", x => x.Id);
+                    table.PrimaryKey("PK_Wishlists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Wishlist_AspNetUsers_UserId",
+                        name: "FK_Wishlists_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Wishlist_Product_ProductId",
+                        name: "FK_Wishlists_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Address",
+                name: "Adresses",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -763,31 +763,31 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 800, DateTimeKind.Utc).AddTicks(5170))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 846, DateTimeKind.Utc).AddTicks(8400))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.Id);
-                    table.CheckConstraint("CK_Address_LocationName_MinLength", "LEN(LocationName) >= 3");
-                    table.CheckConstraint("CK_Address_State_MinLength", "LEN(State) >= 3");
-                    table.CheckConstraint("CK_Address_Street_MinLength", "LEN(Street) >= 3");
-                    table.CheckConstraint("CK_Address_ZipCode_MinLength", "LEN(ZipCode) >= 3");
+                    table.PrimaryKey("PK_Adresses", x => x.Id);
+                    table.CheckConstraint("CK_Adress_LocationName_MinLength", "LEN(LocationName) >= 3");
+                    table.CheckConstraint("CK_Adress_State_MinLength", "LEN(State) >= 3");
+                    table.CheckConstraint("CK_Adress_Street_MinLength", "LEN(Street) >= 3");
+                    table.CheckConstraint("CK_Adress_ZipCode_MinLength", "LEN(ZipCode) >= 3");
                     table.ForeignKey(
-                        name: "FK_Address_AspNetUsers_UserId",
+                        name: "FK_Adresses_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Address_City_CityId",
+                        name: "FK_Adresses_Cities_CityId",
                         column: x => x.CityId,
-                        principalTable: "City",
+                        principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Check",
+                name: "Checks",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -802,22 +802,22 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(7070))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 925, DateTimeKind.Utc).AddTicks(8490))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Check", x => x.Id);
+                    table.PrimaryKey("PK_Checks", x => x.Id);
                     table.CheckConstraint("CK_Check_Sale_MinLength", "[Sale] >= 0  AND [Sale]  <= 100");
                     table.CheckConstraint("CK_Check_Status_MinLength", "[Status] >= 0");
                     table.CheckConstraint("CK_Check_TotalAmmount_MinLength", "[TotalAmmount] >= 0");
                     table.ForeignKey(
-                        name: "FK_Check_Address_AdressId",
+                        name: "FK_Checks_Adresses_AdressId",
                         column: x => x.AdressId,
-                        principalTable: "Address",
+                        principalTable: "Adresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Check_AspNetUsers_UserId",
+                        name: "FK_Checks_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -825,7 +825,7 @@ namespace E_Commerce.Data.Data
                 });
 
             migrationBuilder.CreateTable(
-                name: "CheckProduct",
+                name: "CheckProducts",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -837,22 +837,22 @@ namespace E_Commerce.Data.Data
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "System"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 4, 22, 48, 33, 899, DateTimeKind.Utc).AddTicks(8750))
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2024, 8, 24, 3, 14, 44, 925, DateTimeKind.Utc).AddTicks(9800))
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CheckProduct", x => x.Id);
+                    table.PrimaryKey("PK_CheckProducts", x => x.Id);
                     table.CheckConstraint("CK_CheckProduct_Price_MinLength", "[Price] >= 0");
                     table.CheckConstraint("CK_CheckProduct_ProductCount_MinLength", "[ProductCount] >= 0");
                     table.ForeignKey(
-                        name: "FK_CheckProduct_Check_CheckId",
+                        name: "FK_CheckProducts_Checks_CheckId",
                         column: x => x.CheckId,
-                        principalTable: "Check",
+                        principalTable: "Checks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CheckProduct_Product_ProductId",
+                        name: "FK_CheckProducts_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id");
                 });
 
@@ -872,26 +872,26 @@ namespace E_Commerce.Data.Data
                 columns: new[] { "Id", "AccessFailedCount", "AddedBy", "ConcurrencyStamp", "ConnectionId", "CreatedAt", "Email", "EmailConfirmed", "FullName", "IsActive", "IsDeleted", "IsSeller", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "ProfileImageUrl", "PublicId", "RemovedAt", "SecurityStamp", "TwoFactorEnabled", "UpdatedAt", "UserName", "isOnline" },
                 values: new object[,]
                 {
-                    { "56e9e4e5-22a8-45a7-ab6c-999180f9d2e2", 0, "System", "27c9652c-da81-4b2a-b6cc-094d31f9a42a", null, new DateTime(2024, 8, 4, 18, 48, 33, 800, DateTimeKind.Local).AddTicks(7130), "isiriyev@gmail.com", true, "Ilgar Shiriyev", true, false, true, false, null, "ISIRIYEV@GMAIL.COM", "SHIRIYEV", "AQAAAAIAAYagAAAAEBFTyPgc7Rw+hmveE+AJiyCv+ScML+BdSqBC/9uhF3AVzLUdJ4RkvHA0eZ3RR/w6dA==", "+994508802323", true, null, null, null, "6fda35b6-ba8f-4cfa-8729-38d50452ae8d", false, null, "Shiriyev", false },
-                    { "81c5f0b8-be89-4e4a-88ba-01ca7f6244dd", 0, "System", "d2ab0625-143c-4b3a-9e71-9c192db1e7d4", null, new DateTime(2024, 8, 4, 18, 48, 33, 800, DateTimeKind.Local).AddTicks(7960), "siriyev@hotmail.com", true, "Rufat Code", true, false, true, false, null, "SIRIYEV@HOTMAIL.COM", "ILGAR023", "AQAAAAIAAYagAAAAEEQt/w/VFwEaoxvXnGANZDcTxFV+C0G2dfuem8ShWeFK0cXSB6UqrtbAgb1gNX8xFw==", "+994508802323", true, null, null, null, "ea92ba40-8b1a-44be-8d0d-11f930dc4d37", false, null, "Ilgar23", false }
+                    { "56e9e4e5-22a8-45a7-ab6c-999180f9d2e2", 0, "System", "f7f90812-ee51-4dff-8377-0f27c7805b73", null, new DateTime(2024, 8, 23, 23, 14, 44, 846, DateTimeKind.Local).AddTicks(9550), "isiriyev@gmail.com", true, "Ilgar Shiriyev", true, false, true, false, null, "ISIRIYEV@GMAIL.COM", "SHIRIYEV", "AQAAAAIAAYagAAAAEB39lCKzlpHOpwdwP7xiPGm2yQt5KBO9XIT0Xsn56Tb3Vod6BkQXTjlZVkcFPLSEZw==", "+994508802323", true, null, null, null, "2ac7b380-a2d8-4fb8-82e4-9da37e63105b", false, null, "Shiriyev", false },
+                    { "81c5f0b8-be89-4e4a-88ba-01ca7f6244dd", 0, "System", "3bf87a6b-e2a3-4e29-b69b-8eab2846ec49", null, new DateTime(2024, 8, 23, 23, 14, 44, 846, DateTimeKind.Local).AddTicks(9590), "siriyev@hotmail.com", true, "Ilgar Shiriyev", true, false, true, false, null, "SIRIYEV@HOTMAIL.COM", "ILGAR023", "AQAAAAIAAYagAAAAEA3OT2SGuXB6iM35sD5Yp0EwYC93j7rwlyQmiwsTBrWpJjntov2zWOX+fXPmcjNchw==", "+994508802323", true, null, null, null, "d6a99ad3-d1ae-4015-8b7f-40d66ccc411c", false, null, "Ilgar23", false }
                 });
 
             migrationBuilder.InsertData(
-                table: "Setting",
+                table: "Settings",
                 columns: new[] { "Id", "DeletedAt", "IsDeleted", "Key", "UpdatedAt", "Value" },
                 values: new object[,]
                 {
-                    { "154611ce-4101-4fd1-a7e6-32e76cdcdcf9", null, false, "Free Shipping", null, "Free shipping on all US order or order above $100" },
-                    { "349664c0-689a-42da-8929-a7e05e17ffbe", null, false, "Google", null, "www.google.com" },
-                    { "3ed3de28-8be8-4e7b-a349-598521e75fa7", null, false, "Youtube", null, "www.youtube.com" },
-                    { "69d9f6c9-d060-4196-9a33-fbd2acf167b2", null, false, "Shop with Confidence", null, "Our Protection covers your purchase from click to delivery" },
-                    { "88ccdfd9-3498-4cef-82a6-00f226971782", null, false, "LinkedIn", null, "linkedin.com" },
-                    { "8e0d1a2b-8d7e-44e0-a00e-cda94f71b7f5", null, false, "Location", null, "Neftchi Gurban 168, Baku 1001" },
-                    { "acf56bf4-21e3-438e-9fd9-e24829907e34", null, false, "Instagram", null, "www.instagram.com" },
-                    { "ca1cebbd-34db-4db4-b42f-eaa3176db520", null, false, "24/7 Help Center", null, "Round-the-clock assistance for a smooth shopping experience" },
-                    { "ea99906b-fdbe-484f-bab6-1cb6534068ec", null, false, "Facebook", null, "www.facebook.com" },
-                    { "eca4368e-d100-49a1-ac28-cb928fc8510e", null, false, "Phone", null, "(+0) 900 901 904" },
-                    { "fbb80157-f887-4419-af60-cccf9fa4d097", null, false, "Email", null, "isiriyev@gmail.com" }
+                    { "19d4d3b4-8f60-41f7-8d36-bcc507e7ca8f", null, false, "Phone", null, "(+0) 900 901 904" },
+                    { "1a364170-b490-40e2-95e7-50816eddd999", null, false, "Location", null, "Neftchi Gurban 168, Baku 1001" },
+                    { "3219f100-ac5a-48d8-8ad9-f90b503de55b", null, false, "Google", null, "www.google.com" },
+                    { "473bdeb2-5bdc-4c2c-a539-8914717b1d24", null, false, "Shop with Confidence", null, "Our Protection covers your purchase from click to delivery" },
+                    { "4d3d558b-0300-4113-9f34-302e450e70e9", null, false, "Free Shipping", null, "Free shipping on all US order or order above $100" },
+                    { "546f8f8d-c649-4bea-a378-03040cdce0b1", null, false, "LinkedIn", null, "linkedin.com" },
+                    { "8130d6ab-d793-43c8-b0fe-38e928a7bce0", null, false, "24/7 Help Center", null, "Round-the-clock assistance for a smooth shopping experience" },
+                    { "8aad862a-c3fb-4dcb-98ba-ee94407966e0", null, false, "Instagram", null, "www.instagram.com" },
+                    { "9d05cd71-3f7d-495d-8840-b7c408000928", null, false, "Facebook", null, "www.facebook.com" },
+                    { "cbbe6638-edf2-45c7-a38d-7b10aba97b4a", null, false, "Email", null, "isiriyev@gmail.com" },
+                    { "efeba2c9-1f06-4e69-814b-5305ef165494", null, false, "Youtube", null, "www.youtube.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -905,13 +905,13 @@ namespace E_Commerce.Data.Data
                 values: new object[] { "fee579ed-a458-41ad-b9f4-4299f5a50029", "81c5f0b8-be89-4e4a-88ba-01ca7f6244dd" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Address_CityId",
-                table: "Address",
+                name: "IX_Adresses_CityId",
+                table: "Adresses",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Address_UserId",
-                table: "Address",
+                name: "IX_Adresses_UserId",
+                table: "Adresses",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -954,33 +954,33 @@ namespace E_Commerce.Data.Data
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Basket_ProductId",
-                table: "Basket",
+                name: "IX_Baskets_ProductId",
+                table: "Baskets",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Basket_UserId",
-                table: "Basket",
+                name: "IX_Baskets_UserId",
+                table: "Baskets",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Blog_UserId",
-                table: "Blog",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BlogComment_BlogId",
-                table: "BlogComment",
+                name: "IX_BlogComments_BlogId",
+                table: "BlogComments",
                 column: "BlogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlogComment_ParentId",
-                table: "BlogComment",
+                name: "IX_BlogComments_ParentId",
+                table: "BlogComments",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BlogComment_UserId",
-                table: "BlogComment",
+                name: "IX_BlogComments_UserId",
+                table: "BlogComments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_UserId",
+                table: "Blogs",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -994,8 +994,8 @@ namespace E_Commerce.Data.Data
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_ParentId",
-                table: "Category",
+                name: "IX_Categories_ParentId",
+                table: "Categories",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
@@ -1009,78 +1009,78 @@ namespace E_Commerce.Data.Data
                 column: "ToUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Check_AdressId",
-                table: "Check",
-                column: "AdressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Check_UserId",
-                table: "Check",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CheckProduct_CheckId",
-                table: "CheckProduct",
+                name: "IX_CheckProducts_CheckId",
+                table: "CheckProducts",
                 column: "CheckId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CheckProduct_ProductId",
-                table: "CheckProduct",
+                name: "IX_CheckProducts_ProductId",
+                table: "CheckProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_City_CountryId",
-                table: "City",
-                column: "CountryId");
+                name: "IX_Checks_AdressId",
+                table: "Checks",
+                column: "AdressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_BrandId",
-                table: "Product",
-                column: "BrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoryId",
-                table: "Product",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_SellerId",
-                table: "Product",
-                column: "SellerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductComment_ProductId",
-                table: "ProductComment",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductComment_UserId",
-                table: "ProductComment",
+                name: "IX_Checks_UserId",
+                table: "Checks",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductImage_ProductId",
-                table: "ProductImage",
+                name: "IX_Cities_CountryId",
+                table: "Cities",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductComments_ProductId",
+                table: "ProductComments",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTag_ProductId",
-                table: "ProductTag",
+                name: "IX_ProductComments_UserId",
+                table: "ProductComments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductImages_ProductId",
+                table: "ProductImages",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductTag_TagId",
-                table: "ProductTag",
+                name: "IX_Products_BrandId",
+                table: "Products",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_SellerId",
+                table: "Products",
+                column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTags_ProductId",
+                table: "ProductTags",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductTags_TagId",
+                table: "ProductTags",
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Wishlist_ProductId",
-                table: "Wishlist",
+                name: "IX_Wishlists_ProductId",
+                table: "Wishlists",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Wishlist_UserId",
-                table: "Wishlist",
+                name: "IX_Wishlists_UserId",
+                table: "Wishlists",
                 column: "UserId");
         }
 
@@ -1102,79 +1102,79 @@ namespace E_Commerce.Data.Data
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Basket");
+                name: "Baskets");
 
             migrationBuilder.DropTable(
-                name: "BlogComment");
+                name: "BlogComments");
 
             migrationBuilder.DropTable(
                 name: "BlogTags");
 
             migrationBuilder.DropTable(
-                name: "Campaign");
-
-            migrationBuilder.DropTable(
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
-                name: "CheckProduct");
+                name: "CheckProducts");
 
             migrationBuilder.DropTable(
-                name: "Contact");
+                name: "Compaigns");
 
             migrationBuilder.DropTable(
-                name: "ProductComment");
+                name: "Contacts");
 
             migrationBuilder.DropTable(
-                name: "ProductImage");
+                name: "ProductComments");
 
             migrationBuilder.DropTable(
-                name: "ProductTag");
+                name: "ProductImages");
 
             migrationBuilder.DropTable(
-                name: "Setting");
+                name: "ProductTags");
 
             migrationBuilder.DropTable(
-                name: "Slider");
+                name: "Settings");
 
             migrationBuilder.DropTable(
-                name: "Subscribe");
+                name: "Sliders");
 
             migrationBuilder.DropTable(
-                name: "Wishlist");
+                name: "Subscribes");
+
+            migrationBuilder.DropTable(
+                name: "Wishlists");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Blog");
+                name: "Blogs");
 
             migrationBuilder.DropTable(
-                name: "Check");
+                name: "Checks");
 
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "Adresses");
 
             migrationBuilder.DropTable(
-                name: "Brand");
+                name: "Brands");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "City");
+                name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Country");
+                name: "Countries");
         }
     }
 }

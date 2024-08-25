@@ -22,12 +22,12 @@ namespace E_Commerce.Business.Services
                 smtpClient.Port = 587;
                 smtpClient.Host = "smtp.gmail.com";
                 smtpClient.EnableSsl = true;
-                smtpClient.Credentials = new NetworkCredential("ilgarchsh@code.edu.az", "pjbw wcmp zhes wqtp");
+                smtpClient.Credentials = new NetworkCredential("ilgarchsh@code.edu.az", "rdqs tkgi bntt lpyg");
                 smtpClient.Send(mailMessage);
             }
             catch (Exception ex)
             {
-                throw new Exception("something went wrong");
+                throw new Exception("something went wrong",ex);
             }
         }
         public void SendWithHtml(string from, string displayName, string to, string subject, AlternateView htmlView)
@@ -46,7 +46,7 @@ namespace E_Commerce.Business.Services
                 smtpClient.Port = 587;
                 smtpClient.Host = "smtp.gmail.com";
                 smtpClient.EnableSsl = true;
-                smtpClient.Credentials = new NetworkCredential("ilgarchsh@code.edu.az", "pjbw wcmp zhes wqtp");
+                smtpClient.Credentials = new NetworkCredential("ilgarchsh@code.edu.az", "rdqs tkgi bntt lpyg");
                 smtpClient.Send(mailMessage);
             }
             catch (Exception ex)

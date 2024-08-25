@@ -1,24 +1,29 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{1666D535-F398-47FA-A717-9E437CEA215B}|Default">
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/sh1riyev/Development/E-Commerce/E-Commerce/Controllers/AccountController.cs" relfile="E-Commerce/Controllers/AccountController.cs" line="35" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workbench ActiveDocument="E-Commerce/ServiceRegistration.cs">
     <Files>
-      <File FileName="E-Commerce/ServiceRegistration.cs" Line="16" Column="35" />
+      <File FileName="E-Commerce.Business/Services/SendEmail.cs" />
+      <File FileName="E-Commerce/Controllers/AccountController.cs" />
+      <File FileName="E-Commerce/appsettings.Development.json" />
+      <File FileName="E-Commerce/ServiceRegistration.cs" Line="49" Column="16" />
+      <File FileName="E-Commerce.Business/Services/AccountService.cs" />
+      <File FileName="E-Commerce.Business/Services/UrlHelperService.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="E-Commerce" expanded="True">
             <Node name="E-Commerce" expanded="True">
-              <Node name="ServiceRegistration.cs" selected="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="images" selected="True" />
+              </Node>
             </Node>
             <Node name="E-Commerce.Business" expanded="True">
-              <Node name="Middelware" expanded="True" />
               <Node name="Services" expanded="True" />
-            </Node>
-            <Node name="E-Commerce.Data" expanded="True">
-              <Node name="Configurations" expanded="True" />
             </Node>
           </Node>
         </State>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6O+Tmv0CCGJhEIWvvDJEKse3YaM9KBFvpFugEKiHbdA=",
+  "Hash": "y6fBPTcSuYyfEkjD8DojiQxCE4H5lo8ZbFkaQ4lBjPk=",
   "Source": "E-Commerce",
   "BasePath": "_content/E-Commerce",
   "Mode": "Default",
@@ -34,12 +34,12 @@
       "OriginalItemSpec": "wwwroot/.DS_Store"
     },
     {
-      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/ResetPassword.html",
+      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/Verification/ResetPassword.html",
       "SourceId": "E-Commerce",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/",
       "BasePath": "_content/E-Commerce",
-      "RelativePath": "verification/ResetPassword.html",
+      "RelativePath": "Verification/ResetPassword.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -48,15 +48,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/verification/ResetPassword.html"
+      "OriginalItemSpec": "wwwroot/Verification/ResetPassword.html"
     },
     {
-      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/VerificationEmail.html",
+      "Identity": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/Verification/VerificationEmail.html",
       "SourceId": "E-Commerce",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/",
       "BasePath": "_content/E-Commerce",
-      "RelativePath": "verification/VerificationEmail.html",
+      "RelativePath": "Verification/VerificationEmail.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -65,7 +65,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/verification/VerificationEmail.html"
+      "OriginalItemSpec": "wwwroot/Verification/VerificationEmail.html"
     }
   ]
 }

@@ -5,12 +5,12 @@
       "PackagePath": "staticwebassets/.DS_Store"
     },
     {
-      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/ResetPassword.html",
-      "PackagePath": "staticwebassets/verification/ResetPassword.html"
+      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/Verification/ResetPassword.html",
+      "PackagePath": "staticwebassets/Verification/ResetPassword.html"
     },
     {
-      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/verification/VerificationEmail.html",
-      "PackagePath": "staticwebassets/verification/VerificationEmail.html"
+      "Id": "/Users/sh1riyev/Development/E-Commerce/E-Commerce/wwwroot/Verification/VerificationEmail.html",
+      "PackagePath": "staticwebassets/Verification/VerificationEmail.html"
     },
     {
       "Id": "obj/Debug/net6.0/staticwebassets/msbuild.E-Commerce.Microsoft.AspNetCore.StaticWebAssets.props",

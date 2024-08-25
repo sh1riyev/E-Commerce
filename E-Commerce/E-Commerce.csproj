@@ -40,12 +40,10 @@
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\verification\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\" />
     <Content Remove="wwwroot\images\" />
-    <Content Remove="wwwroot\verification\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\E-Commerce.Business\E-Commerce.Business.csproj">

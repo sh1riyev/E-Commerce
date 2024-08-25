@@ -20,7 +20,7 @@ namespace E_Commerce.Controllers
     {
         private readonly IUserService _userService;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UserController(IUserService userService,RoleManager<IdentityRole> roleManager)
+        public UserController(IUserService userService, RoleManager<IdentityRole> roleManager)
         {
             _userService = userService;
             _roleManager = roleManager;
@@ -28,188 +28,97 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                return Ok(await _userService.GetAllUser(null));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(await _userService.GetAllUser(null));
         }
         [HttpGet("GetRoles")]
         public async Task<IActionResult> GetRoles()
         {
-            try
-            {
-                return Ok(await _roleManager.Roles.ToListAsync());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(await _roleManager.Roles.ToListAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _userService.IsExist(u => u.Id == id)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id);
-                if (getUserDto == null) return NotFound("user is not exist");
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest();
+            else if (!await _userService.IsExist(u => u.Id == id)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id);
+            if (getUserDto == null) return NotFound("user is not exist");
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("SearchByUser")]
         public async Task<IActionResult> SearchByUser(string userName)
         {
-            try
-            {
-                if (userName == null || userName.Trim() == "") return BadRequest("something went wrong");
-                 return Ok(await _userService.GetAllUser(u => !u.IsDeleted && u.UserName.ToLower().Contains(userName.ToLower())));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (userName == null || userName.Trim() == "") return BadRequest("something went wrong");
+            return Ok(await _userService.GetAllUser(u => !u.IsDeleted && u.UserName.ToLower().Contains(userName.ToLower())));
         }
         [HttpGet("GetAllNonActiveSeller")]
         public async Task<IActionResult> GetAllNonActiveSeller()
         {
-            try
-            {
-                List<GetUserDto> getUserDtos = await _userService.GetAllUser(u=>u.IsSeller&&!u.IsActive);
-                return Ok(getUserDtos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<GetUserDto> getUserDtos = await _userService.GetAllUser(u => u.IsSeller && !u.IsActive);
+            return Ok(getUserDtos);
         }
         [HttpGet("GetAllSeller")]
         public async Task<IActionResult> GetAllSeller()
         {
-            try
-            {
-                List<GetUserDto> getUserDtos = await _userService.GetAllUser(u=>u.IsSeller);
-                return Ok(getUserDtos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<GetUserDto> getUserDtos = await _userService.GetAllUser(u => u.IsSeller);
+            return Ok(getUserDtos);
         }
         [AllowAnonymous]
         [HttpGet("GetAllAdminByUser")]
         public async Task<IActionResult> GetAllAdminByUser()
         {
-            try
-            {
-                List<GetUserDto> getUserDtos = await _userService.GetAllUser(null);
-                var data = getUserDtos.FindAll(u => u.Roles.Any(r => r == "Admin" || r == "SupperAdmin")).Select(u => new {u.ProfileImageUrl,u.FullName,u.UserName,Role= u.Roles.Any(r => r == "SupperAdmin") ?"SupperAdmin":"Admin" });
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<GetUserDto> getUserDtos = await _userService.GetAllUser(null);
+            var data = getUserDtos.FindAll(u => u.Roles.Any(r => r == "Admin" || r == "SupperAdmin")).Select(u => new { u.ProfileImageUrl, u.FullName, u.UserName, Role = u.Roles.Any(r => r == "SupperAdmin") ? "SupperAdmin" : "Admin" });
+            return Ok(data);
         }
         [HttpGet("GetAllAdmin")]
         public async Task<IActionResult> GetAllAdmin()
         {
-            try
-            {
-                List<GetUserDto> getUserDtos = await _userService.GetAllUser(null);
-                getUserDtos = getUserDtos.FindAll(u => u.Roles.Any(r=>r=="Admin"||r== "SupperAdmin"));
-                return Ok(getUserDtos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<GetUserDto> getUserDtos = await _userService.GetAllUser(null);
+            getUserDtos = getUserDtos.FindAll(u => u.Roles.Any(r => r == "Admin" || r == "SupperAdmin"));
+            return Ok(getUserDtos);
         }
         [HttpGet("Filter")]
         public async Task<IActionResult> Filter(FilterStatus filterStatus)
         {
-            try
-            {
-                DateTime last = filterStatus.Status == (int)EntityFilter.GetLastDayCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekCreatedByAdmin ? DateTime.Now.AddDays(-1) :
-                    filterStatus.Status == (int)EntityFilter.GetLastDayDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekDeletedByAdmin ? DateTime.Now.AddDays(-7) :
-                    filterStatus.Status == (int)EntityFilter.GetLastDayUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekUpdatedByAdmin ? DateTime.Now.AddDays(-30) : DateTime.Now;
-                Expression<Func<AppUser, bool>> filter = entity => filterStatus.Status > 0 && filterStatus.Status < 4 ? entity.CreatedAt >= last : filterStatus.Status > 3 && filterStatus.Status < 7 ? entity.RemovedAt >= last : filterStatus.Status > 6 && filterStatus.Status < 10 ? entity.UpdatedAt >= last : default;
-                return Ok(await _userService.GetAllUser(filter));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            DateTime last = filterStatus.Status == (int)EntityFilter.GetLastDayCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekCreatedByAdmin ? DateTime.Now.AddDays(-1) :
+                filterStatus.Status == (int)EntityFilter.GetLastDayDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekDeletedByAdmin ? DateTime.Now.AddDays(-7) :
+                filterStatus.Status == (int)EntityFilter.GetLastDayUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekUpdatedByAdmin ? DateTime.Now.AddDays(-30) : DateTime.Now;
+            Expression<Func<AppUser, bool>> filter = entity => filterStatus.Status > 0 && filterStatus.Status < 4 ? entity.CreatedAt >= last : filterStatus.Status > 3 && filterStatus.Status < 7 ? entity.RemovedAt >= last : filterStatus.Status > 6 && filterStatus.Status < 10 ? entity.UpdatedAt >= last : default;
+            return Ok(await _userService.GetAllUser(filter));
         }
         [HttpGet("Search")]
         public async Task<IActionResult> Search(string userName)
         {
-            try
-            {
-                if (userName == null || userName.Trim() == "") return BadRequest("something went wrong");
-                return Ok(await _userService.GetAllUser(u => u.UserName.ToLower().Contains(userName.ToLower())));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (userName == null || userName.Trim() == "") return BadRequest("something went wrong");
+            return Ok(await _userService.GetAllUser(u => u.UserName.ToLower().Contains(userName.ToLower())));
         }
         [HttpGet("Paggination")]
         public async Task<IActionResult> Paginnation(int skip = 0, int take = 4)
         {
-            try
-            {
-                List<GetUserDto> getUserDtos = await _userService.GetAllUser(null);
-                var data = getUserDtos.OrderBy(b => b.CreatedAt).Skip(skip).Take(take);
-                return Ok(new {size=getUserDtos.Count,data, pendingCount = (await _userService.GetAllUser(u => u.IsSeller && !u.IsActive)).Count });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<GetUserDto> getUserDtos = await _userService.GetAllUser(null);
+            var data = getUserDtos.OrderBy(b => b.CreatedAt).Skip(skip).Take(take);
+            return Ok(new { size = getUserDtos.Count, data, pendingCount = (await _userService.GetAllUser(u => u.IsSeller && !u.IsActive)).Count });
         }
         [Authorize(Roles = "SupperAdmin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult>Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                ResponseObj responseObj = await _userService.Delete(id);
-                if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
-                return Ok(responseObj);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest();
+            ResponseObj responseObj = await _userService.Delete(id);
+            if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
+            return Ok(responseObj);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult>Update(string id, UpdateUserDto updateUserDto)
+        public async Task<IActionResult> Update(string id, UpdateUserDto updateUserDto)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!ModelState.IsValid) return BadRequest(ModelState);
-                ResponseObj responseObj = await _userService.Update(id,updateUserDto);
-                if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
-                return Ok(responseObj);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest();
+            else if (!ModelState.IsValid) return BadRequest(ModelState);
+            ResponseObj responseObj = await _userService.Update(id, updateUserDto);
+            if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
+            return Ok(responseObj);
         }
     }
 }

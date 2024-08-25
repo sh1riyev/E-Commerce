@@ -22,7 +22,7 @@ namespace E_Commerce.Controllers
         private readonly IUserService _userService;
         private readonly ICheckService _checkService;
         private readonly IDistributedCache _distributedCache;
-        public AccountController(IMapper mapper,IAccountService accountService,IUserService userService,ICheckService checkService,IDistributedCache distributedCache)
+        public AccountController(IMapper mapper, IAccountService accountService, IUserService userService, ICheckService checkService, IDistributedCache distributedCache)
         {
             _mapper = mapper;
             _accountService = accountService;
@@ -32,68 +32,48 @@ namespace E_Commerce.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegisterDto)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto userRegisterDto)
         {
-            try
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            else if (await _accountService.IsExist(u => u.UserName.ToLower() == userRegisterDto.UserName.ToLower()))
             {
-                if (!ModelState.IsValid)return BadRequest(ModelState);
-                else if (await _accountService.IsExist(u => u.UserName.ToLower() == userRegisterDto.UserName.ToLower()))
-                {
-                    return BadRequest("UserName must be unique for every users");
-                }
-                AppUser appUser = _mapper.Map<AppUser>(userRegisterDto);
-                appUser.CreatedAt = DateTime.Now;
-                appUser.IsActive=userRegisterDto.IsSeller == true ? false : true;
-                var scheme = HttpContext.Request.Scheme;
-                var host = HttpContext.Request.Host.Value;
+                return BadRequest("UserName must be unique for every users");
+            }
+            AppUser appUser = _mapper.Map<AppUser>(userRegisterDto);
+            appUser.CreatedAt = DateTime.Now;
+            appUser.IsActive = userRegisterDto.IsSeller == true ? false : true;
+            var scheme = HttpContext.Request.Scheme;
+            var host = HttpContext.Request.Host.Value;
 
-                ResponseObj responseObj = await _accountService.Register(appUser, userRegisterDto.Password);
-                if (responseObj.StatusCode==(int)StatusCodes.Status400BadRequest)
-                {
-                    return BadRequest(responseObj.ResponseMessage);
-                }
-                
-                return Ok(responseObj);
-            }
-            catch (Exception ex)
+            ResponseObj responseObj = await _accountService.Register(appUser, userRegisterDto.Password, scheme, host);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest)
             {
-                 return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+                return BadRequest(responseObj.ResponseMessage);
             }
+
+            return Ok(responseObj);
         }
         [HttpPost("VerifyEmailWithOTP")]
-        public async Task<IActionResult> VerifyEmailWithOTP(string verifyEmail,string otp)
+        public async Task<IActionResult> VerifyEmailWithOTP(string verifyEmail, string otp)
         {
-            try
-            {
-                if (!int.TryParse(otp, out int intOTP)||VerifyEmail == null || otp == null||otp.Length!=6) return BadRequest("invalid email or OTP");
-                ResponseObj responseObj = await _accountService.VerifyEmailWithOTP(verifyEmail, otp);
-                if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
-                return Ok(responseObj.ResponseMessage);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (!int.TryParse(otp, out int intOTP) || VerifyEmail == null || otp == null || otp.Length != 6) return BadRequest("invalid email or OTP");
+            ResponseObj responseObj = await _accountService.VerifyEmailWithOTP(verifyEmail, otp);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
+            return Ok(responseObj.ResponseMessage);
+
         }
         [HttpPost("VerifyEmail")]
         public async Task<IActionResult> VerifyEmail(string verifyEmail, string token)
         {
-            try
-            {
-                if (VerifyEmail == null || token == null) return BadRequest("invalid email or token");
-                ResponseObj responseObj = await _accountService.VerifyEmail(verifyEmail, token);
-                if (responseObj.StatusCode==(int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
-                return Ok(responseObj.ResponseMessage);
-            }
-            catch (Exception ex)
-            {
-                 return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (VerifyEmail == null || token == null) return BadRequest("invalid email or token");
+            ResponseObj responseObj = await _accountService.VerifyEmail(verifyEmail, token);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
+            return Ok(responseObj.ResponseMessage);
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody]UserLoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
             if (!ModelState.IsValid)
             {
@@ -107,355 +87,235 @@ namespace E_Commerce.Controllers
         [HttpPost("ForgetPassword")]
         public async Task<IActionResult> ForgetPassword(string email)
         {
-            try
-            {
-                if (email == null) return BadRequest("invalid email");
-                var scheme = HttpContext.Request.Scheme;
-                var host = HttpContext.Request.Host.Value;
-                if (email == null) return BadRequest("email is not valid");
-                ResponseObj responseObj = await _accountService.ForgetPassword(email, scheme, host);
-                if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
-                return Ok(responseObj.ResponseMessage);
-            }
-            catch (Exception ex)
-            {
-                 return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (email == null) return BadRequest("invalid email");
+            var scheme = HttpContext.Request.Scheme;
+            var host = HttpContext.Request.Host.Value;
+            if (email == null) return BadRequest("email is not valid");
+            ResponseObj responseObj = await _accountService.ForgetPassword(email, scheme, host);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
+            return Ok(responseObj.ResponseMessage);
         }
-      
+
         [HttpPost("ResetPassword")]
         public async Task<IActionResult> ResetPassword(UserResetPasswordDto userResetPasswordDto)
         {
-            try
-            {
-                if (!ModelState.IsValid)  return BadRequest(ModelState);
-                ResponseObj responseObj = await _accountService.ResetPassword(userResetPasswordDto);
-                if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
-                return Ok(responseObj.ResponseMessage);
-            }
-            catch (Exception ex)
-            {
-                 return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            ResponseObj responseObj = await _accountService.ResetPassword(userResetPasswordDto);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
+            return Ok(responseObj.ResponseMessage);
         }
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult>ProfileUpdate(string id,[FromForm]UserUpdateDto userUpdateDto)
+        public async Task<IActionResult> ProfileUpdate(string id, [FromForm] UserUpdateDto userUpdateDto)
         {
-            try
-            {
-                if (id == null) return BadRequest("something went wrong");
-                else if (!ModelState.IsValid) return BadRequest(ModelState);
-                var scheme = HttpContext.Request.Scheme;
-                var host = HttpContext.Request.Host.Value;
-                ResponseObj responseObj = await _accountService.ProfileUpdate(id,userUpdateDto,scheme,host);
-                if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
-                else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
-                return Ok(responseObj.ResponseMessage);
-            }
-            catch (Exception ex)
-            {
-                 return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest("something went wrong");
+            else if (!ModelState.IsValid) return BadRequest(ModelState);
+            var scheme = HttpContext.Request.Scheme;
+            var host = HttpContext.Request.Host.Value;
+            ResponseObj responseObj = await _accountService.ProfileUpdate(id, userUpdateDto, scheme, host);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj.ResponseMessage);
+            else if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj.ResponseMessage);
+            return Ok(responseObj.ResponseMessage);
         }
         [Authorize]
         [HttpGet("IsExist/{id}")]
         public async Task<IActionResult> IsExist(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return Ok(false);
-                return Ok(true);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return Ok(false);
+            return Ok(true);
         }
+
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult>GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id&&!u.IsDeleted&&u.IsActive)) return NotFound("user is not exist");
-               GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs", "Wishlists");
-                return Ok(_mapper.Map<GetUserDetailDto>(getUserDto));
-            }
-            catch (Exception ex)
-            {
-                 return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs", "Wishlists");
+            return Ok(_mapper.Map<GetUserDetailDto>(getUserDto));
         }
+
         [Authorize]
         [HttpGet("UserWishlist/{id}")]
         public async Task<IActionResult> GetUserWishlist(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Wishlists.Product.ProductImages", "Wishlists.Product.Category", "Wishlists.Product.Brand");
-                
-                getUserDto.Products = null;
-                getUserDto.Wishlists = getUserDto.Wishlists.FindAll(w => !w.IsDeleted);
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Wishlists.Product.ProductImages", "Wishlists.Product.Category", "Wishlists.Product.Brand");
 
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            getUserDto.Products = null;
+            getUserDto.Wishlists = getUserDto.Wishlists.FindAll(w => !w.IsDeleted);
+
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("GetUserChecks/{id}")]
         public async Task<IActionResult> GetUserChecks(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Checkes.CheckProducts.Product.ProductImages", "Checkes.CheckProducts.Product.Seller", "Checkes.Adress");
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Checkes.CheckProducts.Product.ProductImages", "Checkes.CheckProducts.Product.Seller", "Checkes.Adress");
 
-                getUserDto.Products = null;
-                getUserDto.Adresses = null;
-                getUserDto.Checkes = getUserDto.Checkes.Where(w => !w.IsDeleted).OrderByDescending(c=>c.CreatedAt).ToList();
+            getUserDto.Products = null;
+            getUserDto.Adresses = null;
+            getUserDto.Checkes = getUserDto.Checkes.Where(w => !w.IsDeleted).OrderByDescending(c => c.CreatedAt).ToList();
 
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(getUserDto);
         }
         [Authorize(Roles = "Admin,SupperAdmin,Seller")]
         [HttpGet("GetUserOrders/{id}")]
         public async Task<IActionResult> GetUserOrders(string id)
         {
-            try
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id);
+            List<Check> checks = await _checkService.GetAll(c => !c.IsDeleted, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
+
+            foreach (var check in checks)
             {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id);
-                List<Check> checks = await _checkService.GetAll(c => !c.IsDeleted, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
-                
-                foreach (var check in checks)
-                {
-                    check.CheckProducts = check.CheckProducts.Where(cp => cp.Product.SellerId == id).ToList();
-                }
-                getUserDto.Products = null;
-                getUserDto.Adresses = null;
-                getUserDto.Checkes = _mapper.Map<List<GetCheckDto>>(checks);
-                getUserDto.Checkes = getUserDto.Checkes.Where(w => !w.IsDeleted&&w.CheckProducts.Count>0).OrderByDescending(c => c.CreatedAt).ToList();
-                return Ok(getUserDto);
+                check.CheckProducts = check.CheckProducts.Where(cp => cp.Product.SellerId == id).ToList();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            getUserDto.Products = null;
+            getUserDto.Adresses = null;
+            getUserDto.Checkes = _mapper.Map<List<GetCheckDto>>(checks);
+            getUserDto.Checkes = getUserDto.Checkes.Where(w => !w.IsDeleted && w.CheckProducts.Count > 0).OrderByDescending(c => c.CreatedAt).ToList();
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("GetUserMessages/{id}")]
-        public async Task<IActionResult> GetUserMessages(string id,string toId)
+        public async Task<IActionResult> GetUserMessages(string id, string toId)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                else if (!await _accountService.IsExist(u => u.Id == toId && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "SentMessages", "ReceivedMessages");
-                getUserDto.SentMessages = getUserDto.SentMessages.Where(m => m.ToUserId == toId).ToList();
-                getUserDto.ReceivedMessages = getUserDto.ReceivedMessages.Where(m => m.FromUserId == toId).ToList();
-                getUserDto.Products = null;
-                getUserDto.Adresses = null;
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            else if (!await _accountService.IsExist(u => u.Id == toId && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "SentMessages", "ReceivedMessages");
+            getUserDto.SentMessages = getUserDto.SentMessages.Where(m => m.ToUserId == toId).ToList();
+            getUserDto.ReceivedMessages = getUserDto.ReceivedMessages.Where(m => m.FromUserId == toId).ToList();
+            getUserDto.Products = null;
+            getUserDto.Adresses = null;
 
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(getUserDto);
+
         }
         [Authorize]
         [HttpGet("UserBasket/{id}")]
         public async Task<IActionResult> GetUserBasket(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Baskets.Product.ProductImages", "Baskets.Product.Category");
-                getUserDto.Products = null;
-                getUserDto.Wishlists = null;
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Baskets.Product.ProductImages", "Baskets.Product.Category");
+            getUserDto.Products = null;
+            getUserDto.Wishlists = null;
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("UserProduct/{id}")]
         public async Task<IActionResult> GetUserProduct(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Products.ProductImages", "Products.Category", "Products.Brand", "Products.ProductTags.Tag");
-                getUserDto.Wishlists = null;
-                getUserDto.Products = getUserDto.Products.OrderBy(p=>p.CreatedAt).ToList().FindAll(p => !p.IsDeleted&&p.IsAccepted);
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Products.ProductImages", "Products.Category", "Products.Brand", "Products.ProductTags.Tag");
+            getUserDto.Wishlists = null;
+            getUserDto.Products = getUserDto.Products.OrderBy(p => p.CreatedAt).ToList().FindAll(p => !p.IsDeleted && p.IsAccepted);
 
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("UserAdress/{id}")]
         public async Task<IActionResult> GetUserAdress(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Adresses.City.Country");
-                getUserDto.Adresses = getUserDto.Adresses.OrderBy(p => p.CreatedAt).ToList().FindAll(p => !p.IsDeleted);
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Adresses.City.Country");
+            getUserDto.Adresses = getUserDto.Adresses.OrderBy(p => p.CreatedAt).ToList().FindAll(p => !p.IsDeleted);
 
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("ProductSearch/{id}")]
-        public async Task<IActionResult> ProductSearch(string id,string name)
+        public async Task<IActionResult> ProductSearch(string id, string name)
         {
-            try
+            if (name == null || name.Trim() == "" || id == null) return BadRequest("something went wrong");
+            else if (!await _accountService.IsExist(u => u.Id == id & !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Products.ProductImages", "Products.Category", "Products.Brand", "Products.ProductTags.Tag", "Products.ProductComments");
+            if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
+            getUserDto.Wishlists = null;
+            int size = getUserDto.Products.Where(p => !p.IsDeleted && p.IsAccepted).Count();
+            getUserDto.Products = getUserDto.Products.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted && p.IsAccepted && p.Name.ToLower().Contains(name)).ToList();
+            foreach (var product in getUserDto.Products)
             {
-                if (name == null || name.Trim() == ""|| id == null) return BadRequest("something went wrong");
-                else if (!await _accountService.IsExist(u => u.Id == id & !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Products.ProductImages", "Products.Category", "Products.Brand", "Products.ProductTags.Tag", "Products.ProductComments");
-                if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
-                getUserDto.Wishlists = null;
-                int size = getUserDto.Products.Where(p => !p.IsDeleted&&p.IsAccepted).Count();
-                getUserDto.Products = getUserDto.Products.OrderByDescending(p => p.CreatedAt).Where(p=>!p.IsDeleted&&p.IsAccepted&&p.Name.ToLower().Contains(name)).ToList();
-                foreach (var product in getUserDto.Products)
-                {
-                    product.ProductComments = product.ProductComments.FindAll(p => !p.IsDeleted);
-                }
-                return Ok(getUserDto);
+                product.ProductComments = product.ProductComments.FindAll(p => !p.IsDeleted);
             }
-
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("ProductPaginnation/{id}")]
-        public async Task<IActionResult> ProductPaginnation(string id,int skip = 0, int take = 4)
+        public async Task<IActionResult> ProductPaginnation(string id, int skip = 0, int take = 4)
         {
-            try
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Products.ProductImages", "Products.Category", "Products.Brand", "Products.ProductTags.Tag", "Products.ProductComments");
+            if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
+            getUserDto.Wishlists = null;
+            int size = getUserDto.Products.Where(p => !p.IsDeleted && p.IsAccepted).Count();
+            getUserDto.Products = getUserDto.Products.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted && p.IsAccepted).Skip(skip).Take(take).ToList();
+            foreach (var product in getUserDto.Products)
             {
-
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Products.ProductImages", "Products.Category", "Products.Brand", "Products.ProductTags.Tag", "Products.ProductComments");
-                if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
-                getUserDto.Wishlists = null;
-                int size = getUserDto.Products.Where(p => !p.IsDeleted&&p.IsAccepted).Count();
-                getUserDto.Products = getUserDto.Products.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted&&p.IsAccepted).Skip(skip).Take(take).ToList();
-                foreach (var product in getUserDto.Products)
-                {
-                    product.ProductComments = product.ProductComments.FindAll(p => !p.IsDeleted);
-                }
-                return Ok(new {data= getUserDto ,size});
+                product.ProductComments = product.ProductComments.FindAll(p => !p.IsDeleted);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(new { data = getUserDto, size });
         }
         [Authorize]
         [HttpGet("UserBlog/{id}")]
         public async Task<IActionResult> GetUserBlog(string id)
         {
-            try
-            {
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs.BlogTags.Tag", "Blogs.BlogComments");
-                if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
-                getUserDto.Blogs = getUserDto.Blogs.FindAll(b => !b.IsDeleted);
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs.BlogTags.Tag", "Blogs.BlogComments");
+            if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
+            getUserDto.Blogs = getUserDto.Blogs.FindAll(b => !b.IsDeleted);
 
-                foreach (var blog in getUserDto.Blogs)
-                {
-                    blog.BlogComments = blog.BlogComments.FindAll(p => !p.IsDeleted);
-                }
-                return Ok(getUserDto);
-            }
-            catch (Exception ex)
+            foreach (var blog in getUserDto.Blogs)
             {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+                blog.BlogComments = blog.BlogComments.FindAll(p => !p.IsDeleted);
             }
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("BlogSearch/{id}")]
         public async Task<IActionResult> BlogSearch(string id, string title)
         {
-            try
-            {
-                if (title == null || title.Trim() == "" || id == null) return BadRequest("something went wrong");
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs.BlogTags.Tag", "Blogs.BlogComments");
-                if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
-                
-                int size = getUserDto.Blogs.Where(p => !p.IsDeleted).Count();
-                getUserDto.Blogs = getUserDto.Blogs.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted && p.Title.ToLower().Contains(title)).ToList();
-                foreach (var blog in getUserDto.Blogs)
-                {
-                    blog.BlogComments = blog.BlogComments.FindAll(p => !p.IsDeleted);
-                }
-                return Ok(getUserDto);
-            }
+            if (title == null || title.Trim() == "" || id == null) return BadRequest("something went wrong");
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs.BlogTags.Tag", "Blogs.BlogComments");
+            if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
 
-            catch (Exception ex)
+            int size = getUserDto.Blogs.Where(p => !p.IsDeleted).Count();
+            getUserDto.Blogs = getUserDto.Blogs.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted && p.Title.ToLower().Contains(title)).ToList();
+            foreach (var blog in getUserDto.Blogs)
             {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+                blog.BlogComments = blog.BlogComments.FindAll(p => !p.IsDeleted);
             }
+            return Ok(getUserDto);
         }
         [Authorize]
         [HttpGet("BlogPaginnation/{id}")]
         public async Task<IActionResult> BlogPaginnation(string id, int skip = 0, int take = 4)
         {
-            try
+            if (id == null) return BadRequest();
+            else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
+            GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs.BlogTags.Tag", "Blogs.BlogComments");
+            if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
+            int size = getUserDto.Blogs.Where(p => !p.IsDeleted).Count();
+            getUserDto.Blogs = getUserDto.Blogs.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted).Skip(skip).Take(take).ToList();
+            foreach (var blog in getUserDto.Blogs)
             {
-
-                if (id == null) return BadRequest();
-                else if (!await _accountService.IsExist(u => u.Id == id && !u.IsDeleted && u.IsActive)) return NotFound("user is not exist");
-                GetUserDto getUserDto = await _userService.GetUser(u => u.Id == id, "Blogs.BlogTags.Tag", "Blogs.BlogComments");
-                if (getUserDto == null || getUserDto.IsDeleted || !getUserDto.IsActive) return NotFound("user is not exist");
-                int size = getUserDto.Blogs.Where(p => !p.IsDeleted).Count();
-                getUserDto.Blogs = getUserDto.Blogs.OrderByDescending(p => p.CreatedAt).Where(p => !p.IsDeleted).Skip(skip).Take(take).ToList();
-                foreach (var blog in getUserDto.Blogs)
-                {
-                    blog.BlogComments = blog.BlogComments.FindAll(p => !p.IsDeleted);
-                }
-                return Ok(new { data = getUserDto, size });
+                blog.BlogComments = blog.BlogComments.FindAll(p => !p.IsDeleted);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(new { data = getUserDto, size });
         }
     }
 }

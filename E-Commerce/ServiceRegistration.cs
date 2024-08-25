@@ -14,6 +14,7 @@ using E_Commerce.Data;
 using Microsoft.AspNetCore.Mvc.Routing;
 using E_Commerce.Business.Mappings;
 using E_Commerce.DTOs.CategoryDto;
+using Microsoft.Extensions.Options;
 
 namespace E_Commerce
 {
@@ -34,8 +35,6 @@ namespace E_Commerce
                     policy.AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    //.SetIsOriginAllowed(orign => true);
-                    //policy.WithOrigins("https://localhost:7052/", "https://localhost:7052/", "https://localhost:7052/");
                     .WithOrigins("https://localhost:7052/");
                 });
             });
@@ -44,7 +43,7 @@ namespace E_Commerce
             services.AddSwaggerGen();
             services.AddStackExchangeRedisCache(option =>
             {
-                option.Configuration = "https://localhost:7052/";
+                option.Configuration = "localhost:6379";
             });
 
             services.AddDbContext<DataContext>(option =>
@@ -155,12 +154,6 @@ namespace E_Commerce
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
-            //services.Scan(scan =>
-            //services.Scan(scan => scan
-            //        .FromAssembliesOf(typeof(ICategoryService), typeof(IProductService))
-            //        .AddClasses(classes => classes.InNamespaceOf<ICategoryService>())
-            //        .AsImplementedInterfaces()
-            //        .WithScopedLifetime()));
         }
     }
 }

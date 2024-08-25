@@ -9,7 +9,6 @@ namespace E_Commerce.Business.Interfaces
 	public interface IAccountService
 	{
         Task<ResponseObj> Register(AppUser appUser, string password, string requestScheme, string requestHost);
-        Task<ResponseObj> Register(AppUser appUser, string password);
         Task<ResponseObj> Login(UserLoginDto loginDto);
         Task<ResponseObj> ForgetPassword(string email, string requestScheme, string requestHost);
         Task<ResponseObj> ResetPassword(UserResetPasswordDto userResetPasswordDto);

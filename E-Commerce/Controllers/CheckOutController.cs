@@ -30,7 +30,7 @@ namespace E_Commerce.Controllers
         private readonly ISendEmail _sendEmail;
         private readonly string _publicUrl = "https://localhost:7052/";
         private readonly string _privateUrl = "https://localhost:7052/";
-        public CheckOutController(IAdressService adressService,ICompaignsService compaignsService,UserManager<AppUser>userManager,ICheckService checkService,IBasketService basketService,IProductService productService,IMapper mapper,ISendEmail sendEmail)
+        public CheckOutController(IAdressService adressService, ICompaignsService compaignsService, UserManager<AppUser> userManager, ICheckService checkService, IBasketService basketService, IProductService productService, IMapper mapper, ISendEmail sendEmail)
         {
             _adressService = adressService;
             _compaignsService = compaignsService;
@@ -42,28 +42,28 @@ namespace E_Commerce.Controllers
             _sendEmail = sendEmail;
         }
         [HttpPost]
-        public async Task<IActionResult> CheckOut([FromBody]CheckOutDto checkOutDto)
+        public async Task<IActionResult> CheckOut([FromBody] CheckOutDto checkOutDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             else if (!await _userManager.Users.AnyAsync(u => u.Id == checkOutDto.UserId && !u.IsDeleted && u.IsActive))
                 return BadRequest("User is not exist");
-            else if (!await _adressService.IsExist(a => a.Id == checkOutDto.AdressId && !a.IsDeleted&&a.UserId==checkOutDto.UserId))
+            else if (!await _adressService.IsExist(a => a.Id == checkOutDto.AdressId && !a.IsDeleted && a.UserId == checkOutDto.UserId))
                 return BadRequest("adress is not exist");
-            else if (checkOutDto.SaleCode!=null)
+            else if (checkOutDto.SaleCode != null)
             {
-                 if (!await _compaignsService.IsExist(c => !c.IsDeleted && c.ExpirationDate > DateTime.Now && c.Info.ToLower() == checkOutDto.SaleCode.ToLower()))
+                if (!await _compaignsService.IsExist(c => !c.IsDeleted && c.ExpirationDate > DateTime.Now && c.Info.ToLower() == checkOutDto.SaleCode.ToLower()))
                 {
                     return BadRequest("promocode is not valid");
                 }
             }
-            List<Basket> baskets = await _basketService.GetAll(b=>!b.IsDeleted&&b.UserId==checkOutDto.UserId,"Product.ProductImages", "AppUser");
+            List<Basket> baskets = await _basketService.GetAll(b => !b.IsDeleted && b.UserId == checkOutDto.UserId, "Product.ProductImages", "AppUser");
             foreach (var basket in baskets)
             {
                 if (basket.Product.Count < basket.Count)
                 {
                     return BadRequest("product is out of stock");
                 }
-                else if (basket.Product.SellerId==checkOutDto.UserId)
+                else if (basket.Product.SellerId == checkOutDto.UserId)
                 {
                     return BadRequest($"{basket.Product.Name} is belong to your stock");
                 }
@@ -74,7 +74,7 @@ namespace E_Commerce.Controllers
             }
             Adress adress = await _adressService.GetEntity(a => a.Id == checkOutDto.AdressId, "City");
             AppUser user = await _userManager.FindByIdAsync(checkOutDto.UserId);
-            if (user.PhoneNumber==null)
+            if (user.PhoneNumber == null)
             {
                 return BadRequest("Please Edit your phone number");
             }
@@ -93,7 +93,7 @@ namespace E_Commerce.Controllers
             var totalPrice = CalculateSubTax(baskets) + CalculateSubtotal(baskets);
             totalPrice += adress.City.DeliverPrice;
             double sale = 0.0;
-            if (checkOutDto.SaleCode!=null)
+            if (checkOutDto.SaleCode != null)
             {
                 var promocode = await _compaignsService.GetEntity(c => c.Info.ToLower() == checkOutDto.SaleCode.ToLower());
                 if (promocode != null)
@@ -110,7 +110,7 @@ namespace E_Commerce.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)((totalPrice)/(baskets.Count*basket1.Count)),
+                        UnitAmount = (long)((totalPrice) / (baskets.Count * basket1.Count)),
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
@@ -118,8 +118,8 @@ namespace E_Commerce.Controllers
                             Images = basket1.Product.ProductImages.Select(i => i.ImageUrl).ToList()
 
 
-            }
-        },
+                        }
+                    },
                     Quantity = basket1.Count
 
                 };
@@ -127,7 +127,7 @@ namespace E_Commerce.Controllers
             }
             var service = new SessionService();
             Session session = service.Create(options);
-            return Ok(new { Url=session.Url,AdressId=checkOutDto.AdressId,SesionId=session.Id,SaleCode=checkOutDto.SaleCode });
+            return Ok(new { Url = session.Url, AdressId = checkOutDto.AdressId, SesionId = session.Id, SaleCode = checkOutDto.SaleCode });
         }
         public static double CalculateSubtotal(List<Basket> basket)
         {
@@ -158,14 +158,14 @@ namespace E_Commerce.Controllers
             });
         }
         [HttpPost("ConfirmBasket")]
-        public async Task<IActionResult> ConfirmBasket([FromBody]ConfirmBasketDto confirmBasketDto)
+        public async Task<IActionResult> ConfirmBasket([FromBody] ConfirmBasketDto confirmBasketDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             else if (!await _userManager.Users.AnyAsync(u => u.Id == confirmBasketDto.UserId && !u.IsDeleted && u.IsActive))
                 return BadRequest("User is not exist");
             else if (!await _adressService.IsExist(a => a.Id == confirmBasketDto.AdressId && !a.IsDeleted && a.UserId == confirmBasketDto.UserId))
                 return BadRequest("adress is not exist");
-            else if (confirmBasketDto.SesionId==null)
+            else if (confirmBasketDto.SesionId == null)
             {
                 return BadRequest("something went wrong");
             }
@@ -204,7 +204,7 @@ namespace E_Commerce.Controllers
             {
 
                 Product existProduct = await _productService.GetEntity(p => p.Id == basket.ProductId);
-                check.CheckProducts.Add(new CheckProduct { ProductId = basket.ProductId, CheckId = check.Id, Price = basket.Product.Price-(basket.Product.Price*basket.Product.SalePercentage/100)+basket.Product.Tax, ProductCount = basket.Count });
+                check.CheckProducts.Add(new CheckProduct { ProductId = basket.ProductId, CheckId = check.Id, Price = basket.Product.Price - (basket.Product.Price * basket.Product.SalePercentage / 100) + basket.Product.Tax, ProductCount = basket.Count });
                 existProduct.Count -= basket.Count;
                 await _productService.UpdateAfterPayment(existProduct);
                 await _basketService.Delete(basket.Id);
@@ -219,184 +219,113 @@ namespace E_Commerce.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            try
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return BadRequest("something went wrong");
-                }
-                ResponseObj responseObj = await _checkService.Delete(id);
-                if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
-                if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
-                return Ok(responseObj);
-
+                return BadRequest("something went wrong");
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            ResponseObj responseObj = await _checkService.Delete(id);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
+            if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
+            return Ok(responseObj);
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                List<Check> checks = await _checkService.GetAll(c => !c.IsDeleted, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
-                List<GetCheckDto> getCities = _mapper.Map<List<GetCheckDto>>(checks);
-                return Ok(getCities);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<Check> checks = await _checkService.GetAll(c => !c.IsDeleted, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
+            List<GetCheckDto> getCities = _mapper.Map<List<GetCheckDto>>(checks);
+            return Ok(getCities);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByid(string id)
         {
-            try
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return BadRequest("something went wrong");
-                }
-                else if (!await _checkService.IsExist(c => c.Id == id && !c.IsDeleted))
-                {
-                    return NotFound("Check not founded");
-                }
-                Check check = await _checkService.GetEntity(c => !c.IsDeleted, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
-                return Ok(_mapper.Map<GetCheckDto>(check));
+                return BadRequest("something went wrong");
             }
-            catch (Exception ex)
+            else if (!await _checkService.IsExist(c => c.Id == id && !c.IsDeleted))
             {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+                return NotFound("Check not founded");
             }
+            Check check = await _checkService.GetEntity(c => !c.IsDeleted, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
+            return Ok(_mapper.Map<GetCheckDto>(check));
         }
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpGet("Filter")]
         public async Task<IActionResult> Filter(FilterStatus filterStatus)
         {
-            try
-            {
-                DateTime last = filterStatus.Status == (int)EntityFilter.GetLastDayCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekCreatedByAdmin ? DateTime.Now.AddDays(-1) :
-                    filterStatus.Status == (int)EntityFilter.GetLastDayDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekDeletedByAdmin ? DateTime.Now.AddDays(-7) :
-                    filterStatus.Status == (int)EntityFilter.GetLastDayUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekUpdatedByAdmin ? DateTime.Now.AddDays(-30) : DateTime.Now;
-                Expression<Func<Check, bool>> filter = entity => filterStatus.Status > 0 && filterStatus.Status < 4 ? entity.CreatedAt >= last : filterStatus.Status > 3 && filterStatus.Status < 7 ? entity.DeletedAt >= last : filterStatus.Status > 6 && filterStatus.Status < 10 ? entity.UpdatedAt >= last : default;
-                return Ok(_mapper.Map<List<GetCheckByAdminDto>>(
-                   await _checkService.GetAll(filter, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser")
-               ));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            DateTime last = filterStatus.Status == (int)EntityFilter.GetLastDayCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthCreatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekCreatedByAdmin ? DateTime.Now.AddDays(-1) :
+                filterStatus.Status == (int)EntityFilter.GetLastDayDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthDeletedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekDeletedByAdmin ? DateTime.Now.AddDays(-7) :
+                filterStatus.Status == (int)EntityFilter.GetLastDayUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastMonthUpdatedByAdmin || filterStatus.Status == (int)EntityFilter.GetLastWeekUpdatedByAdmin ? DateTime.Now.AddDays(-30) : DateTime.Now;
+            Expression<Func<Check, bool>> filter = entity => filterStatus.Status > 0 && filterStatus.Status < 4 ? entity.CreatedAt >= last : filterStatus.Status > 3 && filterStatus.Status < 7 ? entity.DeletedAt >= last : filterStatus.Status > 6 && filterStatus.Status < 10 ? entity.UpdatedAt >= last : default;
+            return Ok(_mapper.Map<List<GetCheckByAdminDto>>(
+               await _checkService.GetAll(filter, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser")
+           ));
         }
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpGet("Search")]
         public async Task<IActionResult> Search(string userName)
         {
-            try
-            {
-                if (userName == null) return BadRequest("userName is required");
-                return Ok(_mapper.Map<List<GetCheckByAdminDto>>(await _checkService.GetAll(c => c.AppUser.UserName.ToLower().Contains(userName.ToLower()), "Adress", "CheckProducts.Product.ProductImages", "AppUser")));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            if (userName == null) return BadRequest("userName is required");
+            return Ok(_mapper.Map<List<GetCheckByAdminDto>>(await _checkService.GetAll(c => c.AppUser.UserName.ToLower().Contains(userName.ToLower()), "Adress", "CheckProducts.Product.ProductImages", "AppUser")));
         }
 
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpGet("Paggination")]
         public async Task<IActionResult> Paginnation(int skip = 0, int take = 4)
         {
-            try
-            {
-                List<Check> checks = await _checkService.GetAll(null, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
-                var data = _mapper.Map<List<GetCheckByAdminDto>>(checks.OrderBy(c => c.CreatedAt).Skip(skip).Take(take));
-                return Ok(new { size = checks.Count, data });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            List<Check> checks = await _checkService.GetAll(null, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser");
+            var data = _mapper.Map<List<GetCheckByAdminDto>>(checks.OrderBy(c => c.CreatedAt).Skip(skip).Take(take));
+            return Ok(new { size = checks.Count, data });
         }
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpGet("GetByAdmin/{id}")]
         public async Task<IActionResult> GetByAdmin(string id)
         {
-            try
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return BadRequest();
-                }
-                else if (!await _checkService.IsExist(c => c.Id == id))
-                {
-                    return NotFound();
-                }
-                return Ok(_mapper.Map<GetCheckByAdminDto>(await _checkService.GetEntity(c => c.Id == id, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser")));
+                return BadRequest();
             }
-            catch (Exception ex)
+            else if (!await _checkService.IsExist(c => c.Id == id))
             {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
+                return NotFound();
             }
+            return Ok(_mapper.Map<GetCheckByAdminDto>(await _checkService.GetEntity(c => c.Id == id, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser")));
         }
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpGet("GetAllByAdmin")]
         public async Task<IActionResult> GetAllByAdmin()
         {
-            try
-            {
-                return Ok(_mapper.Map<List<GetCheckByAdminDto>>(await _checkService.GetAll(null, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser")));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            return Ok(_mapper.Map<List<GetCheckByAdminDto>>(await _checkService.GetAll(null, "Adress.City.Country", "CheckProducts.Product.ProductImages", "AppUser")));
         }
         [Authorize(Roles = "Admin,SupperAdmin")]
         [HttpGet("Statistics")]
         public async Task<IActionResult> Statistics()
         {
-            try
-            {
-                var data= await _checkService.GetAll();
-                CheckStatisticsDto checkStatistics = new();
-                checkStatistics.ProsessingCount = data.Where(c => c.Status == 1).ToList().Count;
-                checkStatistics.PreparingCount = data.Where(c => c.Status == 2).ToList().Count;
-                checkStatistics.ShipedCount = data.Where(c => c.Status == 3).ToList().Count;
-                checkStatistics.DeliveredCount = data.Where(c => c.Status == 4).ToList().Count;
-                checkStatistics.DeletedCount = data.Where(c => c.IsDeleted).ToList().Count;
-                return Ok(checkStatistics);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            var data = await _checkService.GetAll();
+            CheckStatisticsDto checkStatistics = new();
+            checkStatistics.ProsessingCount = data.Where(c => c.Status == 1).ToList().Count;
+            checkStatistics.PreparingCount = data.Where(c => c.Status == 2).ToList().Count;
+            checkStatistics.ShipedCount = data.Where(c => c.Status == 3).ToList().Count;
+            checkStatistics.DeliveredCount = data.Where(c => c.Status == 4).ToList().Count;
+            checkStatistics.DeletedCount = data.Where(c => c.IsDeleted).ToList().Count;
+            return Ok(checkStatistics);
         }
         [Authorize(Roles = "Admin,SupperAdmin,Seller")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, UpdateCheckDto updateCheckDto)
         {
-            try
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            else if (id == null || id != updateCheckDto.Id) return BadRequest("something went wrong");
+            else if (!await _checkService.IsExist(c => c.Id == id))
             {
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-                else if (id == null || id != updateCheckDto.Id) return BadRequest("something went wrong");
-                else if (!await _checkService.IsExist(c => c.Id == id))
-                {
-                    return NotFound("Check is not exist");
-                }
-                Check check = await _checkService.GetEntity(c => c.Id == id);
-                _mapper.Map(updateCheckDto, check);
-                ResponseObj responseObj = await _checkService.Update(check);
-                if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
-                if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
-                return Ok(responseObj);
+                return NotFound("Check is not exist");
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "Internal Server Error", Error = ex.Message });
-            }
+            Check check = await _checkService.GetEntity(c => c.Id == id);
+            _mapper.Map(updateCheckDto, check);
+            ResponseObj responseObj = await _checkService.Update(check);
+            if (responseObj.StatusCode == (int)StatusCodes.Status400BadRequest) return BadRequest(responseObj);
+            if (responseObj.StatusCode == (int)StatusCodes.Status404NotFound) return NotFound(responseObj);
+            return Ok(responseObj);
         }
     }
 }
