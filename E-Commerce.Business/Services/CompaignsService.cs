@@ -8,159 +8,116 @@ using E_Commerce.Data;
 
 namespace E_Commerce.Business.Services
 {
-	public class CompaignsService: ICompaignsService
+    public class CompaignsService : ICompaignsService
     {
         private readonly IUnitOfWork _unitOfWork;
-		public CompaignsService(IUnitOfWork unitOfWork)
-		{
+        public CompaignsService(IUnitOfWork unitOfWork)
+        {
             _unitOfWork = unitOfWork;
-		}
+        }
 
         public async Task<ResponseObj> Create(Compaigns entity)
         {
-            try
+            if (await IsExist(c => c.Headling.ToLower() == entity.Headling.ToLower()))
             {
-                if (await IsExist(c => c.Headling.ToLower() == entity.Headling.ToLower()))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Compaign is exist"
-                    };
-                }
-                else if (await IsExist(c => c.Info.ToLower() == entity.Info.ToLower()))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Compaign is exist"
-                    };
-                }
-                await _unitOfWork.CompaignsRepository.Create(entity);
-                await _unitOfWork.Complate();
                 return new ResponseObj
                 {
-                    StatusCode = (int)StatusCodes.Status200OK,
-                    ResponseMessage = "Compaign succesfully created"
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Compaign is exist"
                 };
             }
-            catch (Exception ex)
+            else if (await IsExist(c => c.Info.ToLower() == entity.Info.ToLower()))
             {
-                throw new Exception(ex.Message);
+                return new ResponseObj
+                {
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Compaign is exist"
+                };
             }
+            await _unitOfWork.CompaignsRepository.Create(entity);
+            await _unitOfWork.Complate();
+            return new ResponseObj
+            {
+                StatusCode = (int)StatusCodes.Status200OK,
+                ResponseMessage = "Compaign succesfully created"
+            };
         }
 
         public async Task<ResponseObj> Delete(string id)
         {
-            try
+            if (!await IsExist(c => c.Id == id))
             {
-                if (!await IsExist(c => c.Id == id))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status404NotFound,
-                        ResponseMessage = "Compaign is not exist"
-                    };
-                }
-                Compaigns compaign = await GetEntity(c => c.Id == id);
-                if (compaign.IsDeleted)
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Compaign is not active"
-                    };
-                }
-                compaign.IsDeleted = true;
-                compaign.DeletedAt = DateTime.Now;
-                await _unitOfWork.CompaignsRepository.Update(compaign);
-                await _unitOfWork.Complate();
                 return new ResponseObj
                 {
-                    StatusCode = (int)StatusCodes.Status200OK,
-                    ResponseMessage = "Compaign succesfully deleted"
+                    StatusCode = (int)StatusCodes.Status404NotFound,
+                    ResponseMessage = "Compaign is not exist"
                 };
             }
-            catch (Exception ex)
+            Compaigns compaign = await GetEntity(c => c.Id == id);
+            if (compaign.IsDeleted)
             {
-                throw new Exception(ex.Message);
-
+                return new ResponseObj
+                {
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Compaign is not active"
+                };
             }
+            compaign.IsDeleted = true;
+            compaign.DeletedAt = DateTime.Now;
+            await _unitOfWork.CompaignsRepository.Update(compaign);
+            await _unitOfWork.Complate();
+            return new ResponseObj
+            {
+                StatusCode = (int)StatusCodes.Status200OK,
+                ResponseMessage = "Compaign succesfully deleted"
+            };
         }
 
         public async Task<List<Compaigns>> GetAll(Expression<Func<Compaigns, bool>> predicate = null, params string[] includes)
         {
-            try
-            {
-                return await _unitOfWork.CompaignsRepository.GetAll(predicate, includes);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _unitOfWork.CompaignsRepository.GetAll(predicate, includes);
         }
 
         public async Task<Compaigns> GetEntity(Expression<Func<Compaigns, bool>> predicate = null, params string[] includes)
         {
-            try
-            {
-                return await _unitOfWork.CompaignsRepository.GetEntity(predicate, includes);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _unitOfWork.CompaignsRepository.GetEntity(predicate, includes);
         }
 
         public async Task<bool> IsExist(Expression<Func<Compaigns, bool>> predicate = null)
         {
-            try
-            {
-                return await _unitOfWork.CompaignsRepository.IsExist(predicate);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _unitOfWork.CompaignsRepository.IsExist(predicate);
         }
 
         public async Task<ResponseObj> Update(Compaigns entity)
         {
-            try
+            entity.UpdatedAt = DateTime.Now;
+            if (await IsExist(c => c.Headling.ToLower() == entity.Headling.ToLower() && entity.Id != c.Id))
             {
-                entity.UpdatedAt = DateTime.Now;
-                if (await IsExist(c => c.Headling.ToLower() == entity.Headling.ToLower() && entity.Id != c.Id))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Compaign is exist"
-                    };
-                }
-                else if (await IsExist(c => c.Info.ToLower() == entity.Info.ToLower() && entity.Id != c.Id))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Compaign is exist"
-                    };
-                }
-                if (!entity.IsDeleted)
-                {
-                    entity.DeletedAt = null;
-                }
-                await _unitOfWork.CompaignsRepository.Update(entity);
-                await _unitOfWork.Complate();
                 return new ResponseObj
                 {
-                    StatusCode = (int)StatusCodes.Status200OK,
-                    ResponseMessage = "Compaign successfully updated"
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Compaign is exist"
                 };
             }
-            catch (Exception ex)
+            else if (await IsExist(c => c.Info.ToLower() == entity.Info.ToLower() && entity.Id != c.Id))
             {
-                throw new Exception(ex.Message);
+                return new ResponseObj
+                {
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Compaign is exist"
+                };
             }
+            if (!entity.IsDeleted)
+            {
+                entity.DeletedAt = null;
+            }
+            await _unitOfWork.CompaignsRepository.Update(entity);
+            await _unitOfWork.Complate();
+            return new ResponseObj
+            {
+                StatusCode = (int)StatusCodes.Status200OK,
+                ResponseMessage = "Compaign successfully updated"
+            };
         }
     }
 }

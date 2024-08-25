@@ -8,146 +8,103 @@ using E_Commerce.Data;
 
 namespace E_Commerce.Business.Services
 {
-	public class BrandService:IBrandService
-	{
+    public class BrandService : IBrandService
+    {
         private readonly IUnitOfWork _unitOfWork;
-		public BrandService(IUnitOfWork unitOfWork)
-		{
+        public BrandService(IUnitOfWork unitOfWork)
+        {
             _unitOfWork = unitOfWork;
-		}
+        }
 
         public async Task<ResponseObj> Create(Brand entity)
         {
-            try
+            if (await IsExist(b => b.Name.ToLower() == entity.Name.ToLower()))
             {
-                if (await IsExist(b => b.Name.ToLower() == entity.Name.ToLower()))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Brand is exist"
-                    };
-                }
-                await _unitOfWork.BrandRepository.Create(entity);
-                await _unitOfWork.Complate();
                 return new ResponseObj
                 {
-                    StatusCode = (int)StatusCodes.Status200OK,
-                    ResponseMessage = "Brand succesfully created"
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Brand is exist"
                 };
             }
-            catch (Exception ex)
+            await _unitOfWork.BrandRepository.Create(entity);
+            await _unitOfWork.Complate();
+            return new ResponseObj
             {
-                throw new Exception(ex.Message);
-            }
+                StatusCode = (int)StatusCodes.Status200OK,
+                ResponseMessage = "Brand succesfully created"
+            };
         }
 
         public async Task<ResponseObj> Delete(string id)
         {
-            try
+            if (!await IsExist(b => b.Id == id))
             {
-                if (!await IsExist(b => b.Id == id))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status404NotFound,
-                        ResponseMessage = "Brand is not exist"
-                    };
-                }
-                Brand brand = await GetEntity(b => b.Id == id);
-                if (brand.IsDeleted)
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Brand is not active"
-                    };
-                }
-                brand.IsDeleted = true;
-                brand.DeletedAt = DateTime.Now;
-                var response = await Update(brand);
-                if (response.StatusCode != (int)StatusCodes.Status200OK)
-                {
-                    return response;
-                }
                 return new ResponseObj
                 {
-                    StatusCode = (int)StatusCodes.Status200OK,
-                    ResponseMessage = "Brand succesfully deleted"
+                    StatusCode = (int)StatusCodes.Status404NotFound,
+                    ResponseMessage = "Brand is not exist"
                 };
             }
-            catch (Exception ex)
+            Brand brand = await GetEntity(b => b.Id == id);
+            if (brand.IsDeleted)
             {
-                throw new Exception(ex.Message);
-
+                return new ResponseObj
+                {
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Brand is not active"
+                };
             }
+            brand.IsDeleted = true;
+            brand.DeletedAt = DateTime.Now;
+            var response = await Update(brand);
+            if (response.StatusCode != (int)StatusCodes.Status200OK)
+            {
+                return response;
+            }
+            return new ResponseObj
+            {
+                StatusCode = (int)StatusCodes.Status200OK,
+                ResponseMessage = "Brand succesfully deleted"
+            };
         }
 
-            public async Task<List<Brand>> GetAll(Expression<Func<Brand, bool>> predicate = null, params string[] includes)
-            {
-                try
-                {
-                    return await _unitOfWork.BrandRepository.GetAll(predicate, includes);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
-            }
+        public async Task<List<Brand>> GetAll(Expression<Func<Brand, bool>> predicate = null, params string[] includes)
+        {
+            return await _unitOfWork.BrandRepository.GetAll(predicate, includes);
+        }
 
         public async Task<Brand> GetEntity(Expression<Func<Brand, bool>> predicate = null, params string[] includes)
         {
-            try
-            {
-                return await _unitOfWork.BrandRepository.GetEntity(predicate, includes);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _unitOfWork.BrandRepository.GetEntity(predicate, includes);
         }
 
         public async Task<bool> IsExist(Expression<Func<Brand, bool>> predicate = null)
         {
-            try
-            {
-                return await _unitOfWork.BrandRepository.IsExist(predicate);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await _unitOfWork.BrandRepository.IsExist(predicate);
         }
 
         public async Task<ResponseObj> Update(Brand entity)
         {
-            try
+            entity.UpdatedAt = DateTime.Now;
+            if (await IsExist(b => b.Name.ToLower() == entity.Name.ToLower() && entity.Id != b.Id))
             {
-                entity.UpdatedAt = DateTime.Now;
-                if (await IsExist(b => b.Name.ToLower() == entity.Name.ToLower() && entity.Id != b.Id))
-                {
-                    return new ResponseObj
-                    {
-                        StatusCode = (int)StatusCodes.Status400BadRequest,
-                        ResponseMessage = "Brand is exist"
-                    };
-                }
-                if (!entity.IsDeleted)
-                {
-                    entity.DeletedAt = null;
-                }
-                await _unitOfWork.BrandRepository.Update(entity);
-                await _unitOfWork.Complate();
                 return new ResponseObj
                 {
-                    StatusCode = (int)StatusCodes.Status200OK,
-                    ResponseMessage = "Brand successfully updated"
+                    StatusCode = (int)StatusCodes.Status400BadRequest,
+                    ResponseMessage = "Brand is exist"
                 };
             }
-            catch (Exception ex)
+            if (!entity.IsDeleted)
             {
-                throw new Exception(ex.Message);
+                entity.DeletedAt = null;
             }
+            await _unitOfWork.BrandRepository.Update(entity);
+            await _unitOfWork.Complate();
+            return new ResponseObj
+            {
+                StatusCode = (int)StatusCodes.Status200OK,
+                ResponseMessage = "Brand successfully updated"
+            };
         }
     }
 }

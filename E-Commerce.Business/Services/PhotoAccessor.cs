@@ -23,8 +23,6 @@ namespace E_Commerce.Business.Services
 
         public async Task<ImageUploadResult> AddPhoto(IFormFile file)
         {
-            try
-            {
                 var uploadResoult = new ImageUploadResult();
                 using var stream = file.OpenReadStream();
                 var uploadParams = new ImageUploadParams
@@ -34,25 +32,13 @@ namespace E_Commerce.Business.Services
                 };
                 uploadResoult = await _cloudinary.UploadAsync(uploadParams);
                 return uploadResoult;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
         }
 
         public async Task<DeletionResult> DeletePhoto(string publicId)
         {
-            try
-            {
                 var deleteparams = new DeletionParams(publicId);
                 var resoult = await _cloudinary.DestroyAsync(deleteparams);
                 return resoult;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
         }
     }
 
